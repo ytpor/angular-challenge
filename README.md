@@ -1,6 +1,11 @@
-# AngularChallenge
+# Angular Challenge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+The challenge is to build a UI using Angular.
+
+## Prerequisite
+
+* Node version 20.17.0 or higher
+* Angular CLI version 19.2.14 or higher
 
 ## Development server
 
@@ -57,3 +62,5 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+We use the components from [Ant Design of Angular](https://ng.ant.design/docs/introduce/en)

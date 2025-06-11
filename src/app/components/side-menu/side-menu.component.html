@@ -1,0 +1,38 @@
+<app-branding></app-branding>
+<ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+  <ng-template #menuTpl let-menus>
+    @for (menu of menus; track menu) {
+      @if (!menu.children) {
+        <li
+          nz-menu-item
+          nzMatchRouter
+          [nzPaddingLeft]="menu.level * 24"
+          [nzDisabled]="menu.disabled"
+          [nzSelected]="menu.selected"
+        >
+          @if (menu.icon) {
+            <nz-icon [nzType]="menu.icon" />&nbsp;
+          }
+          <a
+            [routerLink]="menu.route">
+            {{ menu.title }}
+          </a>
+        </li>
+      } @else {
+        <li
+          nz-submenu
+          [nzPaddingLeft]="menu.level * 24"
+          [nzOpen]="menu.open"
+          [nzTitle]="menu.title"
+          [nzIcon]="menu.icon"
+          [nzDisabled]="menu.disabled"
+        >
+          <ul>
+            <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }" />
+          </ul>
+        </li>
+      }
+    }
+  </ng-template>
+</ul>
