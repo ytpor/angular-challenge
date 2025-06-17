@@ -1,12 +1,13 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ZorroModule } from './../../zorro.module';
+import { HeaderComponent } from '../../components/header/header.component';
 import { SideMenuComponent } from './../../components/side-menu/side-menu.component';
 import { FooterComponent } from '../../components/footer/footer.component';
+import { CollapseService } from '../../services/collapse/collapse.service';
+import { HandsetService } from '../../services/handset/handset.service';
+
 @Component({
   selector: 'app-full',
   standalone: true,
@@ -15,6 +16,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     RouterModule,
     RouterOutlet,
     ZorroModule,
+    HeaderComponent,
     SideMenuComponent,
     FooterComponent,
   ],
@@ -22,14 +24,14 @@ import { FooterComponent } from '../../components/footer/footer.component';
   styleUrl: './full.component.scss'
 })
 export class FullComponent implements OnInit {
-  isCollapsed = false;
-  isHandset$: Observable<boolean>;
+  handsetService = inject(HandsetService);
+  collapseService = inject(CollapseService);
 
-  constructor(readonly elementRef: ElementRef, readonly breakpointObserver: BreakpointObserver) {
-    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  constructor(readonly elementRef: ElementRef) {
+  }
+
+  collapseTrue() {
+    this.collapseService.collapseTrue();
   }
 
   ngOnInit(): void {

@@ -1,14 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ZorroModule } from './../../zorro.module';
 import { BrandingComponent } from './../branding/branding.component';
 import { navItems } from './side-menu-data';
+import { CollapseService } from '../../services/collapse/collapse.service';
+import { HandsetService } from '../../services/handset/handset.service';
 
 @Component({
   selector: 'app-side-menu',
   standalone: true,
   imports: [
+    CommonModule,
     NgTemplateOutlet,
     RouterModule,
     ZorroModule,
@@ -17,9 +20,14 @@ import { navItems } from './side-menu-data';
   templateUrl: './side-menu.component.html'
 })
 export class SideMenuComponent {
-  @Input() isCollapsed = false;
+  handsetService = inject(HandsetService);
+  collapseService = inject(CollapseService);
 
-  mode = false;
-  dark = false;
   menus = navItems;
+
+  collapseMenu() {
+    if (this.handsetService.isHandset()) {
+      this.collapseService.collapseTrue();
+    }
+  }
 }

@@ -1,0 +1,38 @@
+<div class="app-header">
+  <nz-row nzType="flex" nzAlign="middle">
+    <nz-col nzSpan="8">
+      <button nz-button nzType="text" class="header-trigger" title="toggleMenu" (click)="toggleMenu()">
+        <nz-icon class="trigger icon-large"
+          [nzType]="handsetService.isHandset() ? 'menu' : (collapseService.isCollapsed() ? 'menu-unfold' : 'menu-fold')" />
+      </button>
+    </nz-col>
+    <nz-col nzSpan="16">
+      <nz-row nzType="flex" nzJustify="end">
+        <button nz-button nzType="text" title="notification">
+          <nz-icon nzType="bell" />
+        </button>
+        <button nz-button nz-dropdown nzType="default" nzShape="circle" nzTrigger="click" [nzDropdownMenu]="menu"
+          title="menu">
+          <nz-icon nzType="user" />
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item nzMatchRouter *ngFor="let menu of menus">
+              <ng-container *ngIf="menu.icon">
+                <nz-icon [nzType]="menu.icon" />&nbsp;
+              </ng-container>
+              <a [routerLink]="menu.route">{{ menu.title }}</a>
+            </li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item>
+              <nz-icon [nzType]="'logout'" />&nbsp;
+              <a (click)="logout()">
+                Logout
+              </a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-row>
+    </nz-col>
+  </nz-row>
+</div>
