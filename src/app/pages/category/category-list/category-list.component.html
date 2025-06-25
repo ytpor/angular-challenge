@@ -1,0 +1,38 @@
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+  <a nz-button nzType="primary" [routerLink]="['/category/create']">
+    <nz-icon nzType="plus" />
+    Add Category
+  </a>
+</div>
+
+<nz-card>
+  <nz-table #basicTable nzShowSizeChanger [nzData]="categories" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)"
+    nzSize="small">
+    <thead>
+      <tr>
+        <th nzColumnKey="name" [nzSortFn]="true" scope="col">Name</th>
+        <th nzColumnKey="description" [nzSortFn]="true" scope="col">Description</th>
+        <th nzColumnKey="createdAt" [nzSortFn]="true" scope="col">Created</th>
+        <th nzColumnKey="updatedAt" [nzSortFn]="true" scope="col">Updated</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.createdAt | date: 'short' }}</td>
+        <td>{{ data.updatedAt | date: 'short' }}</td>
+        <td>
+          <button nz-button nzType="link" (click)="editCategory(data)">
+            <nz-icon nzType="edit" />
+          </button>
+          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)">
+            <nz-icon nzType="delete" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

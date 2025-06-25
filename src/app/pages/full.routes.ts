@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-
-import { CategoryComponent } from './category/category.component';
 import { ItemAttributeComponent } from './item-attribute/item-attribute.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
@@ -9,8 +7,11 @@ export const FullRoutes: Routes = [
     path: '',
     children: [
       {
-        path: 'category',
-        component: CategoryComponent,
+        path: '',
+        loadChildren: () =>
+          import('./category/category.routes').then(
+            (m) => m.CategoryRoutes
+          ),
       },
       {
         path: 'item-attribute',

@@ -1,0 +1,50 @@
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+  <a nz-button nzType="primary" [routerLink]="['/category/list']">
+    <nz-icon nzType="arrow-left" />
+    Back
+  </a>
+</div>
+
+<nz-card nzTitle="Edit Category">
+  <nz-row [nzGutter]="16">
+    <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+      <ng-container *ngIf="errorMessage">
+        <nz-alert
+          nzType="error"
+          [nzMessage]="errorMessage"
+          [nzDescription]="errorTemplate"
+          nzShowIcon></nz-alert>
+
+        <ng-template #errorTemplate>
+          <ul *ngIf="errorDetails.length > 0" class="error-details">
+            <li *ngFor="let detail of errorDetails">{{ detail }}</li>
+          </ul>
+        </ng-template>
+        <p></p>
+      </ng-container>
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>Name</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input formControlName="name" id="name" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>Description</nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input formControlName="description" id="description" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control
+            nz-col
+            [nzXs]="{ span: 24, offset: 0 }"
+            [nzLg]="{ span: 28, offset: 6 }"
+          >
+            <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-col>
+  </nz-row>
+</nz-card>
