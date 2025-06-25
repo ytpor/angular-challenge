@@ -1,16 +1,14 @@
 import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { authGuard } from './guards/auth/auth.guard';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/welcome' },
-  // {
-  //   path: 'welcome',
-  //   loadChildren: () =>
-  //     import('./pages/welcome/welcome.routes').then(
-  //       m => m.WELCOME_ROUTES
-  //     )
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/login'
+  },
   {
     path: '',
     component: BlankComponent,
@@ -30,11 +28,17 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./pages/full.routes').then(
             (m) => m.FullRoutes
           ),
       },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: '/',
+    // redirectTo: 'authentication/error',
   },
 ];

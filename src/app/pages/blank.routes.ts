@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
+import { loginGuard } from '../guards/login/login.guard';
 
 export const BlankRoutes: Routes = [
   {
@@ -8,6 +9,7 @@ export const BlankRoutes: Routes = [
     children: [
       {
         path: 'login',
+        canActivate: [loginGuard],
         component: LoginComponent,
       },
     ],

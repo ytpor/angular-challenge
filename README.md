@@ -7,6 +7,13 @@ The challenge is to build a UI using Angular.
 * Node version 20.17.0 or higher
 * Angular CLI version 19.2.14 or higher
 
+## Get started
+
+* Clone this repository
+* Change directory into the newly cloned repository
+* Make a copy of `.env.example`, and name it `.env`.
+* Edit the content of `.env` with your environment in mind.
+
 ## Development server
 
 To start a local development server, run:
