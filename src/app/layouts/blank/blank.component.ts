@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ZorroModule } from '../../zorro.module';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -8,7 +7,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
   selector: 'app-blank',
   standalone: true,
   imports: [
-    CommonModule,
     RouterOutlet,
     ZorroModule,
     FooterComponent,

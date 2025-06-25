@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { navItems } from './header-data';
@@ -11,7 +10,6 @@ import { HandsetService } from '../../services/handset/handset.service';
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     ZorroModule,
   ],

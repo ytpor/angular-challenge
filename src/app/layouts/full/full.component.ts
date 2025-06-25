@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { ZorroModule } from './../../zorro.module';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -12,7 +11,6 @@ import { HandsetService } from '../../services/handset/handset.service';
   selector: 'app-full',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     RouterOutlet,
     ZorroModule,
