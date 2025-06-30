@@ -31,6 +31,12 @@
       <app-header></app-header>
     </nz-header>
     <nz-content>
+      <app-alert
+        *ngIf="alertData"
+        [type]="alertData.type"
+        [message]="alertData.message"
+        [details]="alertData.details">
+      </app-alert>
       <router-outlet></router-outlet>
     </nz-content>
     <nz-footer>

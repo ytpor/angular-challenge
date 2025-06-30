@@ -8,20 +8,6 @@
 <nz-card nzTitle="Edit Category">
   <nz-row [nzGutter]="16">
     <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
-      <ng-container *ngIf="errorMessage">
-        <nz-alert
-          nzType="error"
-          [nzMessage]="errorMessage"
-          [nzDescription]="errorTemplate"
-          nzShowIcon></nz-alert>
-
-        <ng-template #errorTemplate>
-          <ul *ngIf="errorDetails.length > 0" class="error-details">
-            <li *ngFor="let detail of errorDetails">{{ detail }}</li>
-          </ul>
-        </ng-template>
-        <p></p>
-      </ng-container>
       <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
         <nz-form-item>
           <nz-form-label [nzSpan]="6" nzRequired>Name</nz-form-label>

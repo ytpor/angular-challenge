@@ -1,5 +1,11 @@
 <nz-card style="width:300px; margin:auto; margin-top:20px;">
   <app-branding [defaultClass]="'alternatve'"></app-branding>
+  <app-alert-basic
+    *ngIf="alertData"
+    [type]="alertData.type"
+    [message]="alertData.message"
+    [details]="alertData.details">
+  </app-alert-basic>
   <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-control nzErrorTip="Please input your username!">

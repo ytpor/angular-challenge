@@ -1,0 +1,14 @@
+<ng-container *ngIf="message">
+  <nz-alert
+    [nzType]="type"
+    [nzMessage]="message"
+    [nzDescription]="detailsTemplate"
+    nzCloseable
+    nzShowIcon>
+  </nz-alert>
+  <ng-template #detailsTemplate>
+    <ul *ngIf="details.length > 0" class="error-details">
+      <li *ngFor="let detail of details">{{ detail }}</li>
+    </ul>
+  </ng-template>
+</ng-container>

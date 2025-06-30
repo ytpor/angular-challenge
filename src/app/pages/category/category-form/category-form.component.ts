@@ -5,8 +5,9 @@ import {
   Validators
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ZorroModule } from '../../../zorro.module';
+import { AlertService } from '../../../services/alert/alert.service';
 import { CategoryService } from '../category.service';
 
 @Component({
@@ -21,14 +22,12 @@ import { CategoryService } from '../category.service';
   styleUrl: './category-form.component.scss'
 })
 export class CategoryFormComponent {
-  categoryService = inject(CategoryService);
-  router = inject(Router);
-
-  errorMessage: string | null = null;
-  errorDetails: string[] = [];
-
+  readonly alertService = inject(AlertService);
+  readonly categoryService = inject(CategoryService);
+  readonly router = inject(Router);
   readonly fb = inject(NonNullableFormBuilder);
-  readonly destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
+
   validateForm = this.fb.group({
     name: this.fb.control('', [Validators.required]),
     description: this.fb.control('', [Validators.required])
@@ -42,13 +41,22 @@ export class CategoryFormComponent {
   submitForm(): void {
     if (this.validateForm.valid) {
       this.categoryService.createCategory(this.validateForm.value)
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
+            this.alertService.showAlert(
+              'success',
+              'New category created',
+              []
+            );
             this.router.navigate(['/category']);
           },
           error: (err) => {
-            this.errorMessage = err.error?.message || 'An error occurred';
-            this.errorDetails = err.error?.details || [];
+            this.alertService.showAlert(
+              'error',
+              err.error?.message ?? 'Failed to create a record',
+              err.error?.details ?? []
+            );
           }
         });
     } else {
@@ -63,6 +71,7 @@ export class CategoryFormComponent {
 
   resetForm(e: MouseEvent): void {
     e.preventDefault();
+    this.alertService.clearAlert();
     this.validateForm.reset();
   }
 }

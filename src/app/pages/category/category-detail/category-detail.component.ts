@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ZorroModule } from '../../../zorro.module';
+import { AlertService } from '../../../services/alert/alert.service';
 import { CategoryService } from '../category.service';
 
 @Component({
@@ -20,23 +21,23 @@ import { CategoryService } from '../category.service';
   templateUrl: './category-detail.component.html',
   styleUrl: './category-detail.component.scss'
 })
-export class CategoryDetailComponent {
-  categoryService = inject(CategoryService);
-  router = inject(Router);
-
+export class CategoryDetailComponent implements OnInit, OnDestroy {
   categoryId!: number;
 
-  errorMessage: string | null = null;
-  errorDetails: string[] = [];
-
+  readonly alertService = inject(AlertService);
+  readonly categoryService = inject(CategoryService);
+  readonly router = inject(Router);
   readonly fb = inject(NonNullableFormBuilder);
-  readonly destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
+
   validateForm = this.fb.group({
     name: this.fb.control('', [Validators.required]),
     description: this.fb.control('', [Validators.required])
   });
 
-  constructor(readonly route: ActivatedRoute) { }
+  constructor(
+    readonly route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.categoryId = +this.route.snapshot.paramMap.get('id')!;
@@ -45,62 +46,64 @@ export class CategoryDetailComponent {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   loadCategory(id: number): void {
     this.categoryService.getCategory(id)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          // Patch form with retrieved category data
           this.validateForm.patchValue({
             name: data.name,
             description: data.description
           });
         },
         error: (err) => {
-          this.errorMessage = err.error?.message || 'Failed to load category';
-          this.errorDetails = err.error?.details || [];
+          this.alertService.showAlert(
+            'error',
+            err.error?.message ?? 'Category not found',
+            err.error?.details ?? []
+          );
+          this.router.navigate(['/category/list']);
         }
       });
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   submitForm(): void {
     if (this.validateForm.valid) {
-      if (this.validateForm.valid) {
-        const formValue = this.validateForm.value;
-        let request$;
-
-        if (this.categoryId) {
-          // Update existing category
-          request$ = this.categoryService.updateCategory({
-            id: this.categoryId,
-            ...formValue
-          });
-        } else {
-          // Create new category
-          request$ = this.categoryService.createCategory(formValue);
-        }
-
-        request$.subscribe({
+      const formValue = this.validateForm.value;
+      this.categoryService.updateCategory({
+        id: this.categoryId,
+        ...formValue
+      })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
           next: () => {
+            this.alertService.showAlert(
+              'success',
+              'Category updated',
+              []
+            );
             this.router.navigate(['/category/list']);
           },
           error: (err) => {
-            this.errorMessage = err.error?.message || 'An error occurred';
-            this.errorDetails = err.error?.details || [];
+            this.alertService.showAlert(
+              'error',
+              err.error?.message ?? 'Failed to update a record',
+              err.error?.details ?? []
+            );
           }
         });
-      } else {
-        Object.values(this.validateForm.controls).forEach(control => {
-          if (control.invalid) {
-            control.markAsDirty();
-            control.updateValueAndValidity({ onlySelf: true });
-          }
-        });
-      }
+    } else {
+      Object.values(this.validateForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
     }
   }
 }

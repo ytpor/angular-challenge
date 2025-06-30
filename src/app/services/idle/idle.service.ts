@@ -1,17 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IdleService {
+export class IdleService implements OnDestroy {
   idle_second = Number(import.meta.env.NG_APP_IDLE_SECOND) || 300; // default 5 min
   timeout_second = Number(import.meta.env.NG_APP_TIMEOUT_SECOND) || 5; // default 5 seconds
 
-  constructor(readonly idle: Idle, readonly router: Router, readonly authService: AuthService) {
+  private readonly destroy$ = new Subject<void>();
+
+  constructor(
+    readonly idle: Idle,
+    readonly router: Router,
+    readonly authService: AuthService
+  ) {
     this.setupIdleDetection();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private setupIdleDetection() {
@@ -20,11 +32,13 @@ export class IdleService {
     // Set the default interrupts (things like clicks, scrolls, touches to the document).
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
-    this.idle.onTimeout.subscribe(() => {
-      console.log('Timed out!');
-      this.authService.logout();
-      this.router.navigate(['/login']);
-    });
+    this.idle.onTimeout
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        console.log('Timed out!');
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      });
   }
 
   reset() {

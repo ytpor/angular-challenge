@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ZorroModule } from '../../../zorro.module';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -16,7 +17,7 @@ import { Category } from '../category';
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
 })
-export class CategoryListComponent {
+export class CategoryListComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   loading = true;
   total = 0;
@@ -25,12 +26,21 @@ export class CategoryListComponent {
   search = '';
   sort = 'name';
 
-  router = inject(Router);
+  private readonly destroy$ = new Subject<void>();
 
-  constructor(readonly categoryService: CategoryService, readonly modal: NzModalService) { }
+  constructor(
+    readonly categoryService: CategoryService,
+    readonly modal: NzModalService,
+    readonly router: Router
+  ) { }
 
   ngOnInit() {
     this.loadCategories(this.pageIndex, this.pageSize, null, null);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadCategories(
@@ -41,6 +51,7 @@ export class CategoryListComponent {
   ): void {
     this.loading = true;
     this.categoryService.getCategories(pageIndex, pageSize, search, sort)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         this.loading = false;
         this.categories = data.content;
@@ -82,8 +93,10 @@ export class CategoryListComponent {
   }
 
   deleteCategory(category: Category): void {
-    this.categoryService.deleteCategory(category.id).subscribe(() => {
-      this.loadCategories(this.pageIndex, this.pageSize, null, null);
-    });
+    this.categoryService.deleteCategory(category.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadCategories(this.pageIndex, this.pageSize, null, null);
+      });
   }
 }

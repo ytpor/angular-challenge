@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { IdleService } from './services/idle/idle.service';
 
@@ -11,7 +11,10 @@ import { IdleService } from './services/idle/idle.service';
 export class AppComponent implements OnInit {
   title = 'Angular Challenge';
 
-  constructor(readonly elementRef: ElementRef, readonly idleService: IdleService) {}
+  constructor(
+    readonly elementRef: ElementRef,
+    readonly idleService: IdleService
+  ) {}
 
   ngOnInit(): void {
     // Hide angular version

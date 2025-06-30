@@ -14,8 +14,10 @@ import { FooterComponent } from '../../components/footer/footer.component';
   templateUrl: './blank.component.html',
   styleUrl: './blank.component.scss'
 })
-export class BlankComponent implements OnInit  {
-  constructor(readonly elementRef: ElementRef) {}
+export class BlankComponent implements OnInit {
+  constructor(
+    readonly elementRef: ElementRef
+  ) {}
 
   ngOnInit(): void {
     // Hide angular version
