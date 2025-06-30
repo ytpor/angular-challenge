@@ -12,6 +12,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
@@ -31,6 +32,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzLayoutModule,
     NzMenuModule,
     NzModalModule,
+    NzResultModule,
     NzTableModule,
     NzPaginationModule,
   ],
