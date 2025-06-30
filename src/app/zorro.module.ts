@@ -14,6 +14,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
     NzModalModule,
     NzResultModule,
     NzTableModule,
+    NzTypographyModule,
     NzPaginationModule,
   ],
 })
