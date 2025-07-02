@@ -1,7 +1,7 @@
 <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
   <a nz-button nzType="primary" [routerLink]="['/category/create']">
     <nz-icon nzType="plus" />
-    Add Category
+    {{ 'CATEGORY.ADD_CATEGORY' | translate }}
   </a>
 </div>
 
@@ -11,11 +11,21 @@
     nzSize="small">
     <thead>
       <tr>
-        <th nzColumnKey="name" [nzSortFn]="true" scope="col">Name</th>
-        <th nzColumnKey="description" [nzSortFn]="true" scope="col">Description</th>
-        <th nzColumnKey="createdAt" [nzSortFn]="true" scope="col">Created</th>
-        <th nzColumnKey="updatedAt" [nzSortFn]="true" scope="col">Updated</th>
-        <th scope="col">Actions</th>
+        <th nzColumnKey="name" [nzSortFn]="true" scope="col">
+          {{ 'CATEGORY.NAME' | translate }}
+        </th>
+        <th nzColumnKey="description" [nzSortFn]="true" scope="col">
+          {{ 'CATEGORY.DESCRIPTION' | translate }}
+        </th>
+        <th nzColumnKey="createdAt" [nzSortFn]="true" scope="col">
+          {{ 'CATEGORY.CREATED' | translate }}
+        </th>
+        <th nzColumnKey="updatedAt" [nzSortFn]="true" scope="col">
+          {{ 'CATEGORY.UPDATED' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'CATEGORY.ACTIONS' | translate }}
+        </th>
       </tr>
     </thead>
     <tbody>

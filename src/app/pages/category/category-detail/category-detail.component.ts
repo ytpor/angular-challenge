@@ -6,6 +6,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
 import { AlertService } from '../../../services/alert/alert.service';
 import { CategoryService } from '../category.service';
@@ -16,6 +17,7 @@ import { CategoryService } from '../category.service';
   imports: [
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
     ZorroModule,
   ],
   templateUrl: './category-detail.component.html',

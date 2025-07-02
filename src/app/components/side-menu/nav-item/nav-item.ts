@@ -1,6 +1,6 @@
 export interface NavItem {
   level?: number;
-  title?: string;
+  titleKey: string;
   icon?: string;
   route?: string;
   open?: boolean;

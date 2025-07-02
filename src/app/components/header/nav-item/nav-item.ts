@@ -1,5 +1,5 @@
 export interface NavItem {
-  title?: string;
+  titleKey: string;
   icon?: string;
   route?: string;
 }

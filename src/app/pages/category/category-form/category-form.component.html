@@ -1,22 +1,26 @@
 <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
   <a nz-button nzType="primary" [routerLink]="['/category/list']">
     <nz-icon nzType="arrow-left" />
-    Back
+    {{ 'CATEGORY.BACK' | translate }}
   </a>
 </div>
 
-<nz-card nzTitle="Create New Category">
+<nz-card nzTitle="{{ 'CATEGORY.CREATE_CATEGORY' | translate }}">
   <nz-row [nzGutter]="16">
     <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
       <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzRequired>Name</nz-form-label>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ 'CATEGORY.NAME' | translate }}
+          </nz-form-label>
           <nz-form-control [nzSpan]="18">
             <input nz-input formControlName="name" id="name" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzRequired>Description</nz-form-label>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ 'CATEGORY.DESCRIPTION' | translate }}
+          </nz-form-label>
           <nz-form-control [nzSpan]="18">
             <input nz-input formControlName="description" id="description" />
           </nz-form-control>
@@ -27,8 +31,12 @@
             [nzXs]="{ span: 24, offset: 0 }"
             [nzLg]="{ span: 28, offset: 6 }"
           >
-            <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
-            <button nz-button (click)="resetForm($event)">Reset</button>
+            <button nz-button nzType="primary" [disabled]="!validateForm.valid">
+              {{ 'COMMON.SUBMIT' | translate }}
+            </button>
+            <button nz-button (click)="resetForm($event)">
+              {{ 'COMMON.RESET' | translate }}
+            </button>
           </nz-form-control>
         </nz-form-item>
       </form>

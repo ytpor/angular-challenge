@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ZorroModule } from './../../zorro.module';
 import { BrandingComponent } from './../branding/branding.component';
 import { navItems } from './side-menu-data';
@@ -14,6 +15,7 @@ import { HandsetService } from '../../services/handset/handset.service';
     CommonModule,
     NgTemplateOutlet,
     RouterModule,
+    TranslateModule,
     ZorroModule,
     BrandingComponent,
   ],

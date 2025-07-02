@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -12,6 +13,7 @@ import { Category } from '../category';
   standalone: true,
   imports: [
     RouterModule,
+    TranslateModule,
     ZorroModule,
   ],
   templateUrl: './category-list.component.html',
@@ -23,19 +25,20 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   total = 0;
   pageIndex = 1;
   pageSize = 10;
-  search = '';
-  sort = 'name';
+  sortField:any = '';
+  sortOrder:any = 'desc';
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     readonly categoryService: CategoryService,
     readonly modal: NzModalService,
-    readonly router: Router
+    readonly router: Router,
+    readonly translate: TranslateService
   ) { }
 
   ngOnInit() {
-    this.loadCategories(this.pageIndex, this.pageSize, null, null);
+    this.loadCategories(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
   }
 
   ngOnDestroy(): void {
@@ -46,11 +49,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   loadCategories(
     pageIndex: number,
     pageSize: number,
-    search: string | null,
-    sort: string | null,
+    sortField: string | null,
+    sortOrder: string | null,
   ): void {
     this.loading = true;
-    this.categoryService.getCategories(pageIndex, pageSize, search, sort)
+    this.categoryService.getCategories(pageIndex, pageSize, sortField, sortOrder)
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         this.loading = false;
@@ -67,6 +70,12 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     sortOrder = this.mapSortOrder(
       sortOrder === 'ascend' || sortOrder === 'descend' ? sortOrder : null
     ); // 'asc', 'desc', or null
+
+    this.pageIndex = pageIndex;
+    this.pageSize = pageSize;
+    this.sortField = sortField;
+    this.sortOrder = sortOrder;
+
     this.loadCategories(pageIndex, pageSize, sortField, sortOrder);
   }
 
@@ -81,14 +90,18 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete(category: Category): void {
+    const title = this.translate.instant('CATEGORY.DELETE_CONFIRM_TITLE');
+    const content = this.translate.instant('CATEGORY.DELETE_CONFIRM_CONTENT');
+    const okText = this.translate.instant('COMMON.YES');
+    const cancelText = this.translate.instant('COMMON.NO');
     this.modal.confirm({
-      nzTitle: 'Are you sure you want to delete this category?',
-      nzContent: `<b style="color: red;">${category.name}</b> will be permanently removed.`,
-      nzOkText: 'Yes',
+      nzTitle: title,
+      nzContent: `<strong>${category.name}</strong> ` + content,
+      nzOkText: okText,
       nzOkType: 'primary',
       nzOkDanger: true,
       nzOnOk: () => this.deleteCategory(category),
-      nzCancelText: 'No',
+      nzCancelText: cancelText,
     });
   }
 
@@ -96,7 +109,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.categoryService.deleteCategory(category.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.loadCategories(this.pageIndex, this.pageSize, null, null);
+        this.loadCategories(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
       });
   }
 }

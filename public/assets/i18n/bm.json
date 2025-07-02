@@ -1,0 +1,41 @@
+{
+  "CATEGORY": {
+    "ACTIONS": "Tindakan",
+    "ADD_CATEGORY": "Kategori Baru",
+    "BACK": "Kembali",
+    "CREATE_CATEGORY": "Tambah Kategori Baru",
+    "CREATED": "Dicipta",
+    "DELETE_CONFIRM_TITLE": "Adakah anda pasti mahu memadam kategori ini?",
+    "DELETE_CONFIRM_CONTENT": "akan dipadam secara kekal.",
+    "DESCRIPTION": "Penerangan",
+    "EDIT_CATEGORY": "Sunting Kategori",
+    "NAME": "Nama",
+    "UPDATED": "Dikemas kini"
+  },
+  "COMMON": {
+    "NO": "Tidak",
+    "RESET": "Set Semula",
+    "SUBMIT": "Hantar",
+    "YES": "Ya"
+  },
+    "HEADER": {
+    "LOGOUT": "Log Keluar",
+    "MENU": "Menu",
+    "MY_PROFILE": "Profil",
+    "TOGGLE_MENU": "Togol Menu"
+  },
+  "LANGUAGE_SWITCHER": {
+    "SWITCH_LANGUAGE": "Tukar Bahasa"
+  },
+  "SIDE_MENU": {
+    "CATEGORY": "Kategori",
+    "DASHBOARD": "Papan Pemuka",
+    "ITEM_ATTRIBUTE": "Atribut Item",
+    "SETTINGS": "Tetapan",
+    "WELCOME": "Selamat Datang"
+  },
+  "WELCOME": {
+    "TITLE": "Selamat datang ke Angular Challenge!",
+    "MESSAGE": "Kami gembira anda berada di sini. Terokai ciri-ciri yang tersedia dan nikmati pengalaman anda."
+  }
+}

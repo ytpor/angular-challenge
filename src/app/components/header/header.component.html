@@ -1,18 +1,29 @@
 <div class="app-header">
   <nz-row nzType="flex" nzAlign="middle">
     <nz-col nzSpan="8">
-      <button nz-button nzType="text" class="header-trigger" title="toggleMenu" (click)="toggleMenu()">
+      <button
+        nz-button
+        nzType="text"
+        class="header-trigger"
+        title="{{ 'HEADER.TOGGLE_MENU' | translate}}"
+        (click)="toggleMenu()">
         <nz-icon class="trigger icon-large"
           [nzType]="handsetService.isHandset() ? 'menu' : (collapseService.isCollapsed() ? 'menu-unfold' : 'menu-fold')" />
       </button>
     </nz-col>
     <nz-col nzSpan="16">
-      <nz-row nzType="flex" nzJustify="end">
+      <nz-row nzType="flex" nzAlign="middle" nzJustify="end">
         <button nz-button nzType="text" title="notification">
           <nz-icon nzType="bell" />
         </button>
-        <button nz-button nz-dropdown nzType="default" nzShape="circle" nzTrigger="click" [nzDropdownMenu]="menu"
-          title="menu">
+        <button
+          nz-button
+          nz-dropdown
+          nzType="default"
+          nzShape="circle"
+          nzTrigger="click"
+          [nzDropdownMenu]="menu"
+          title="{{ 'HEADER.MENU' | translate}}">
           <nz-icon nzType="user" />
         </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
@@ -21,17 +32,19 @@
               <ng-container *ngIf="menu.icon">
                 <nz-icon [nzType]="menu.icon" />&nbsp;
               </ng-container>
-              <a [routerLink]="menu.route">{{ menu.title }}</a>
+              <a [routerLink]="menu.route">{{ menu.titleKey | translate }}</a>
             </li>
             <li nz-menu-divider></li>
             <li nz-menu-item>
               <nz-icon [nzType]="'logout'" />&nbsp;
               <a (click)="logout()">
-                Logout
+                {{ 'HEADER.LOGOUT' | translate }}
               </a>
             </li>
           </ul>
         </nz-dropdown-menu>
+        &nbsp;
+        <app-language-switcher></app-language-switcher>
       </nz-row>
     </nz-col>
   </nz-row>

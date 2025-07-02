@@ -14,7 +14,7 @@
           <nz-icon [nzType]="menu.icon"></nz-icon>&nbsp;
         </ng-container>
         <a [routerLink]="menu.route" (click)="collapseMenu()">
-          {{ menu.title }}
+          {{ menu.titleKey | translate }}
         </a>
       </li>
       <li
@@ -22,7 +22,7 @@
         nz-submenu
         [nzPaddingLeft]="menu.level * 24"
         [nzOpen]="menu.open"
-        [nzTitle]="menu.title"
+        [nzTitle]="menu.titleKey | translate"
         [nzIcon]="menu.icon"
         [nzDisabled]="menu.disabled"
       >

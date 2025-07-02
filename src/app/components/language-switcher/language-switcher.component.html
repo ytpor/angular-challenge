@@ -1,0 +1,17 @@
+<button
+  nz-button
+  nz-dropdown
+  nzType="default"
+  nzShape="circle"
+  nzTrigger="click"
+  [nzDropdownMenu]="menu"
+  title="{{ 'LANGUAGE_SWITCHER.SWITCH_LANGUAGE' | translate}}">
+  {{ selectedLang | uppercase }}
+</button>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li *ngFor="let lang of translate.getLangs()" nz-menu-item (click)="switchLanguage(lang)">
+      {{ getLangLabel(lang) }}
+    </li>
+  </ul>
+</nz-dropdown-menu>

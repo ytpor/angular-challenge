@@ -1,6 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { icons } from './icons-provider';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
@@ -9,10 +8,12 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, HttpClient } from '@angular/common/http';
 import { provideNgIdle } from '@ng-idle/core';
 import { jwtInterceptor } from './interceptors/jwt/jwt.interceptor';
 import { httpErrorInterceptor } from './interceptors/httpError/http-error.interceptor';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { createTranslateLoader } from './core/i18n/translate-loader';
 
 registerLocaleData(en);
 
@@ -30,6 +31,14 @@ export const appConfig: ApplicationConfig = {
         httpErrorInterceptor,
       ])
     ),
-    provideNgIdle()
+    provideNgIdle(),
+    provideTranslateService({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'en', // Set the default language
+    }),
   ]
 };
