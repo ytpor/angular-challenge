@@ -18,11 +18,24 @@
     "SUBMIT": "Hantar",
     "YES": "Ya"
   },
-    "HEADER": {
+  "HEADER": {
     "LOGOUT": "Log Keluar",
     "MENU": "Menu",
     "MY_PROFILE": "Profil",
     "TOGGLE_MENU": "Togol Menu"
+  },
+  "ITEM_ATTRIBUTE": {
+    "ACTIONS": "Tindakan",
+    "ADD_ITEM_ATTRIBUTE": "Atribut Item Baru",
+    "BACK": "Kembali",
+    "CREATE_ITEM_ATTRIBUTE": "Tambah Atribut Item Baru",
+    "CREATED": "Dicipta",
+    "DELETE_CONFIRM_TITLE": "Adakah anda pasti mahu memadam atribut item ini?",
+    "DELETE_CONFIRM_CONTENT": "akan dipadam secara kekal.",
+    "DESCRIPTION": "Penerangan",
+    "EDIT_ITEM_ATTRIBUTE": "Sunting Atribut Item",
+    "NAME": "Nama",
+    "UPDATED": "Dikemas kini"
   },
   "LANGUAGE_SWITCHER": {
     "SWITCH_LANGUAGE": "Tukar Bahasa"

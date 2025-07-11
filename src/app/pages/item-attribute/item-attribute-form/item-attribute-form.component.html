@@ -1,0 +1,45 @@
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+  <a nz-button nzType="primary" [routerLink]="['/item-attribute/list']">
+    <nz-icon nzType="arrow-left" />
+    {{ 'ITEM_ATTRIBUTE.BACK' | translate }}
+  </a>
+</div>
+
+<nz-card nzTitle="{{ 'ITEM_ATTRIBUTE.CREATE_ITEM_ATTRIBUTE' | translate }}">
+  <nz-row [nzGutter]="16">
+    <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ 'ITEM_ATTRIBUTE.NAME' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input formControlName="name" id="name" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzRequired>
+            {{ 'ITEM_ATTRIBUTE.DESCRIPTION' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input nz-input formControlName="description" id="description" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control
+            nz-col
+            [nzXs]="{ span: 24, offset: 0 }"
+            [nzLg]="{ span: 28, offset: 6 }"
+          >
+            <button nz-button nzType="primary" [disabled]="!validateForm.valid">
+              {{ 'COMMON.SUBMIT' | translate }}
+            </button>
+            <button nz-button (click)="resetForm($event)">
+              {{ 'COMMON.RESET' | translate }}
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-col>
+  </nz-row>
+</nz-card>

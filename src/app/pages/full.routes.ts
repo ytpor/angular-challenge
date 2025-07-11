@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ItemAttributeComponent } from './item-attribute/item-attribute.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 export const FullRoutes: Routes = [
@@ -14,8 +13,11 @@ export const FullRoutes: Routes = [
           ),
       },
       {
-        path: 'item-attribute',
-        component: ItemAttributeComponent,
+        path: '',
+        loadChildren: () =>
+          import('./item-attribute/item-attribute.routes').then(
+            (m) => m.ItemAttributeRoutes
+          ),
       },
       {
         path: 'welcome',

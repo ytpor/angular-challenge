@@ -1,0 +1,48 @@
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+  <a nz-button nzType="primary" [routerLink]="['/item-attribute/create']">
+    <nz-icon nzType="plus" />
+    {{ 'ITEM_ATTRIBUTE.ADD_ITEM_ATTRIBUTE' | translate }}
+  </a>
+</div>
+
+<nz-card>
+  <nz-table #basicTable nzShowSizeChanger [nzData]="itemAttributes" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)"
+    nzSize="small">
+    <thead>
+      <tr>
+        <th nzColumnKey="name" [nzSortFn]="true" scope="col">
+          {{ 'ITEM_ATTRIBUTE.NAME' | translate }}
+        </th>
+        <th nzColumnKey="description" [nzSortFn]="true" scope="col">
+          {{ 'ITEM_ATTRIBUTE.DESCRIPTION' | translate }}
+        </th>
+        <th nzColumnKey="createdAt" [nzSortFn]="true" scope="col">
+          {{ 'ITEM_ATTRIBUTE.CREATED' | translate }}
+        </th>
+        <th nzColumnKey="updatedAt" [nzSortFn]="true" scope="col">
+          {{ 'ITEM_ATTRIBUTE.UPDATED' | translate }}
+        </th>
+        <th scope="col">
+          {{ 'ITEM_ATTRIBUTE.ACTIONS' | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.createdAt | date: 'short' }}</td>
+        <td>{{ data.updatedAt | date: 'short' }}</td>
+        <td>
+          <button nz-button nzType="link" (click)="editItemAttribute(data)">
+            <nz-icon nzType="edit" />
+          </button>
+          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)">
+            <nz-icon nzType="delete" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
