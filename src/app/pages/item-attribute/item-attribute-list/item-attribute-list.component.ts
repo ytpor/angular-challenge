@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { AlertService } from '../../../services/alert/alert.service';
 import { ItemAttributeService } from '../item-attribute.service';
 import { ItemAttribute } from '../item-attribute';
 
@@ -25,12 +26,13 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
   total = 0;
   pageIndex = 1;
   pageSize = 10;
-  sortField:any = '';
-  sortOrder:any = 'desc';
+  sortField: any = '';
+  sortOrder: any = 'desc';
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    readonly alertService: AlertService,
     readonly itemAttributeService: ItemAttributeService,
     readonly modal: NzModalService,
     readonly router: Router,
@@ -111,5 +113,12 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.loadItemAttributes(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
       });
+
+    const message = this.translate.instant('ITEM_ATTRIBUTE.RECORD_DELETED');
+    this.alertService.showAlert(
+      'success',
+      `'${itemAttribute.name}' ` + message,
+      []
+    );
   }
 }

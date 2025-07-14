@@ -90,7 +90,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
               this.translate.instant('CATEGORY.RECORD_UPDATED'),
               []
             );
-            this.router.navigate(['/category/list']);
+            this.router.navigate(['/category/edit', this.categoryId]);
           },
           error: (err) => {
             this.alertService.showAlert(

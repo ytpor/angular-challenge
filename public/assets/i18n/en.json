@@ -13,6 +13,7 @@
     "FAILED_TO_UPDATE": "Failed to update a record",
     "NAME": "Name",
     "NEW_RECORD_CREATED": "New category created",
+    "RECORD_DELETED": "has been deleted",
     "RECORD_UPDATED": "Category updated",
     "UPDATED": "Updated"
   },
@@ -42,6 +43,7 @@
     "FAILED_TO_UPDATE": "Failed to update a record",
     "NAME": "Name",
     "NEW_RECORD_CREATED": "New item attribute created",
+    "RECORD_DELETED": "has been deleted",
     "RECORD_UPDATED": "Item Attribute updated",
     "UPDATED": "Updated"
   },

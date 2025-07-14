@@ -90,7 +90,7 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
               this.translate.instant('ITEM_ATTRIBUTE.RECORD_UPDATED'),
               []
             );
-            this.router.navigate(['/item-attribute/list']);
+            this.router.navigate(['/item-attribute/edit', this.itemAttributeId]);
           },
           error: (err) => {
             this.alertService.showAlert(

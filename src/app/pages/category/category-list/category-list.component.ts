@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { AlertService } from '../../../services/alert/alert.service';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
 
@@ -25,12 +26,13 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   total = 0;
   pageIndex = 1;
   pageSize = 10;
-  sortField:any = '';
-  sortOrder:any = 'desc';
+  sortField: any = '';
+  sortOrder: any = 'desc';
 
   private readonly destroy$ = new Subject<void>();
 
   constructor(
+    readonly alertService: AlertService,
     readonly categoryService: CategoryService,
     readonly modal: NzModalService,
     readonly router: Router,
@@ -111,5 +113,12 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.loadCategories(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
       });
+
+    const message = this.translate.instant('CATEGORY.RECORD_DELETED');
+    this.alertService.showAlert(
+      'success',
+      `'${category.name}' ` + message,
+      []
+    );
   }
 }

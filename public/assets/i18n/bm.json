@@ -13,6 +13,7 @@
     "FAILED_TO_UPDATE": "Gagal mengemas kini rekod",
     "NAME": "Nama",
     "NEW_RECORD_CREATED": "Kategori baharu telah dicipta",
+    "RECORD_DELETED": "telah dipadam",
     "RECORD_UPDATED": "Kategori telah dikemas kini",
     "UPDATED": "Dikemas kini"
   },
@@ -42,6 +43,7 @@
     "FAILED_TO_UPDATE": "Gagal mengemas kini rekod",
     "NAME": "Nama",
     "NEW_RECORD_CREATED": "Atribut Item baharu telah dicipta",
+    "RECORD_DELETED": "telah dipadam",
     "RECORD_UPDATED": "Atribut Item telah dikemas kini",
     "UPDATED": "Dikemas kini"
   },
