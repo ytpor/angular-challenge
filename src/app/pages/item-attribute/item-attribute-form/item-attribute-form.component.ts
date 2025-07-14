@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
 import { AlertService } from '../../../services/alert/alert.service';
 import { ItemAttributeService } from '../item-attribute.service';
@@ -28,6 +28,7 @@ export class ItemAttributeFormComponent {
   readonly itemAttributeService = inject(ItemAttributeService);
   readonly router = inject(Router);
   readonly fb = inject(NonNullableFormBuilder);
+  readonly translate = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
 
   validateForm = this.fb.group({
@@ -48,7 +49,7 @@ export class ItemAttributeFormComponent {
           next: (res) => {
             this.alertService.showAlert(
               'success',
-              'New item attribute created',
+              this.translate.instant('ITEM_ATTRIBUTE.NEW_RECORD_CREATED'),
               []
             );
             this.router.navigate(['/item-attribute']);
@@ -56,7 +57,7 @@ export class ItemAttributeFormComponent {
           error: (err) => {
             this.alertService.showAlert(
               'error',
-              err.error?.message ?? 'Failed to create a record',
+              err.error?.message ?? this.translate.instant('ITEM_ATTRIBUTE.FAILED_TO_CREATE'),
               err.error?.details ?? []
             );
           }

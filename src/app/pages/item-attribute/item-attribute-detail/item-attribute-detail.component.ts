@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
 import { AlertService } from '../../../services/alert/alert.service';
 import { ItemAttributeService } from '../item-attribute.service';
@@ -30,6 +30,7 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
   readonly itemAttributeService = inject(ItemAttributeService);
   readonly router = inject(Router);
   readonly fb = inject(NonNullableFormBuilder);
+  readonly translate = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
 
   validateForm = this.fb.group({
@@ -86,7 +87,7 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
           next: () => {
             this.alertService.showAlert(
               'success',
-              'Item Attribute updated',
+              this.translate.instant('ITEM_ATTRIBUTE.RECORD_UPDATED'),
               []
             );
             this.router.navigate(['/item-attribute/list']);
@@ -94,7 +95,7 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
           error: (err) => {
             this.alertService.showAlert(
               'error',
-              err.error?.message ?? 'Failed to update a record',
+              err.error?.message ?? this.translate.instant('ITEM_ATTRIBUTE.FAILED_TO_UPDATE'),
               err.error?.details ?? []
             );
           }

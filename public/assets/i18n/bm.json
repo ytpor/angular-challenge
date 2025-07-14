@@ -1,15 +1,19 @@
 {
   "CATEGORY": {
     "ACTIONS": "Tindakan",
-    "ADD_CATEGORY": "Kategori Baru",
+    "ADD_RECORD": "Kategori Baru",
     "BACK": "Kembali",
-    "CREATE_CATEGORY": "Tambah Kategori Baru",
+    "CREATE_RECORD": "Tambah Kategori Baru",
     "CREATED": "Dicipta",
     "DELETE_CONFIRM_TITLE": "Adakah anda pasti mahu memadam kategori ini?",
     "DELETE_CONFIRM_CONTENT": "akan dipadam secara kekal.",
     "DESCRIPTION": "Penerangan",
-    "EDIT_CATEGORY": "Sunting Kategori",
+    "EDIT_RECORD": "Sunting Kategori",
+    "FAILED_TO_CREATE": "Gagal mencipta rekod",
+    "FAILED_TO_UPDATE": "Gagal mengemas kini rekod",
     "NAME": "Nama",
+    "NEW_RECORD_CREATED": "Kategori baharu telah dicipta",
+    "RECORD_UPDATED": "Kategori telah dikemas kini",
     "UPDATED": "Dikemas kini"
   },
   "COMMON": {
@@ -26,15 +30,19 @@
   },
   "ITEM_ATTRIBUTE": {
     "ACTIONS": "Tindakan",
-    "ADD_ITEM_ATTRIBUTE": "Atribut Item Baru",
+    "ADD_RECORD": "Atribut Item Baru",
     "BACK": "Kembali",
-    "CREATE_ITEM_ATTRIBUTE": "Tambah Atribut Item Baru",
+    "CREATE_RECORD": "Tambah Atribut Item Baru",
     "CREATED": "Dicipta",
     "DELETE_CONFIRM_TITLE": "Adakah anda pasti mahu memadam atribut item ini?",
     "DELETE_CONFIRM_CONTENT": "akan dipadam secara kekal.",
     "DESCRIPTION": "Penerangan",
-    "EDIT_ITEM_ATTRIBUTE": "Sunting Atribut Item",
+    "EDIT_RECORD": "Sunting Atribut Item",
+    "FAILED_TO_CREATE": "Gagal mencipta rekod",
+    "FAILED_TO_UPDATE": "Gagal mengemas kini rekod",
     "NAME": "Nama",
+    "NEW_RECORD_CREATED": "Atribut Item baharu telah dicipta",
+    "RECORD_UPDATED": "Atribut Item telah dikemas kini",
     "UPDATED": "Dikemas kini"
   },
   "LANGUAGE_SWITCHER": {
