@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TruncatePipe } from '../../../pipes/truncate.pipe';
 import { ZorroModule } from '../../../zorro.module';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -16,6 +17,7 @@ import { Category } from '../category';
     RouterModule,
     TranslateModule,
     ZorroModule,
+    TruncatePipe,
   ],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
