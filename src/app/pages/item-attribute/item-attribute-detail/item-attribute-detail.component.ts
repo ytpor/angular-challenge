@@ -33,6 +33,11 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
   readonly translate = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
 
+  pageIndex: number = 1;
+  pageSize: number = 10;
+  sortField: any = '';
+  sortOrder: any = '';
+
   validateForm = this.fb.group({
     name: this.fb.control('', [Validators.required]),
     description: this.fb.control('', [Validators.required])
@@ -43,6 +48,11 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    const queryParams = this.route.snapshot.queryParams;
+    this.pageIndex = queryParams['pageIndex'] ?? 1;
+    this.pageSize = queryParams['pageSize'] ?? 10;
+    this.sortField = queryParams['sortField'] ?? '';
+    this.sortOrder = queryParams['sortOrder'] ?? '';
     this.itemAttributeId = +this.route.snapshot.paramMap.get('id')!;
     if (this.itemAttributeId) {
       this.loadItemAttribute(this.itemAttributeId);
@@ -67,7 +77,7 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
         error: (err) => {
           this.alertService.showAlert(
             'error',
-            err.error?.message ?? 'Item Attribute not found',
+            err.error?.message ?? this.translate.instant('ITEM_ATTRIBUTE.RECORD_NOT_FOUND'),
             err.error?.details ?? []
           );
           this.router.navigate(['/item-attribute/list']);
@@ -108,5 +118,16 @@ export class ItemAttributeDetailComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/item-attribute/list'], {
+      queryParams: {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortOrder: this.sortOrder
+      }
+    });
   }
 }

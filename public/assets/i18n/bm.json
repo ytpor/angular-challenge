@@ -44,6 +44,7 @@
     "NAME": "Nama",
     "NEW_RECORD_CREATED": "Atribut Item baharu telah dicipta",
     "RECORD_DELETED": "telah dipadam",
+    "RECORD_NOT_FOUND": "Atribut Item tidak dijumpai",
     "RECORD_UPDATED": "Atribut Item telah dikemas kini",
     "UPDATED": "Dikemas kini"
   },

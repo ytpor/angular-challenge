@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
@@ -23,7 +23,7 @@ import { ItemAttributeService } from '../item-attribute.service';
   templateUrl: './item-attribute-form.component.html',
   styleUrl: './item-attribute-form.component.scss'
 })
-export class ItemAttributeFormComponent {
+export class ItemAttributeFormComponent implements OnInit {
   readonly alertService = inject(AlertService);
   readonly itemAttributeService = inject(ItemAttributeService);
   readonly router = inject(Router);
@@ -31,10 +31,27 @@ export class ItemAttributeFormComponent {
   readonly translate = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
 
+  pageIndex: number = 1;
+  pageSize: number = 10;
+  sortField: any = '';
+  sortOrder: any = '';
+
   validateForm = this.fb.group({
     name: this.fb.control('', [Validators.required]),
     description: this.fb.control('', [Validators.required])
   });
+
+  constructor(
+    readonly route: ActivatedRoute
+  ) { }
+
+  ngOnInit(): void {
+    const queryParams = this.route.snapshot.queryParams;
+    this.pageIndex = queryParams['pageIndex'] ?? 1;
+    this.pageSize = queryParams['pageSize'] ?? 10;
+    this.sortField = queryParams['sortField'] ?? '';
+    this.sortOrder = queryParams['sortOrder'] ?? '';
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -76,5 +93,15 @@ export class ItemAttributeFormComponent {
     e.preventDefault();
     this.alertService.clearAlert();
     this.validateForm.reset();
+  }
+  goBack(): void {
+    this.router.navigate(['/item-attribute/list'], {
+      queryParams: {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortOrder: this.sortOrder
+      }
+    });
   }
 }

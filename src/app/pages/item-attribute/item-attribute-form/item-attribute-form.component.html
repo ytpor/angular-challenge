@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
-  <a nz-button nzType="primary" [routerLink]="['/item-attribute/list']">
+  <a nz-button nzType="primary" (click)="goBack()">
     <nz-icon nzType="arrow-left" />
     {{ 'ITEM_ATTRIBUTE.BACK' | translate }}
   </a>

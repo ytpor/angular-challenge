@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
-  <a nz-button nzType="primary" [routerLink]="['/item-attribute/create']">
+  <a nz-button nzType="primary" (click)="addItemAttribute()">
     <nz-icon nzType="plus" />
     {{ 'ITEM_ATTRIBUTE.ADD_RECORD' | translate }}
   </a>

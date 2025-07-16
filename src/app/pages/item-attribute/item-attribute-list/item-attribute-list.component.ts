@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ZorroModule } from '../../../zorro.module';
@@ -24,10 +24,10 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
   itemAttributes: ItemAttribute[] = [];
   loading = true;
   total = 0;
-  pageIndex = 1;
-  pageSize = 10;
+  pageIndex: number = 1;
+  pageSize: number = 10;
   sortField: any = '';
-  sortOrder: any = 'desc';
+  sortOrder: any = '';
 
   private readonly destroy$ = new Subject<void>();
 
@@ -35,11 +35,17 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
     readonly alertService: AlertService,
     readonly itemAttributeService: ItemAttributeService,
     readonly modal: NzModalService,
+    readonly route: ActivatedRoute,
     readonly router: Router,
     readonly translate: TranslateService
   ) { }
 
   ngOnInit() {
+    const queryParams = this.router.parseUrl(this.router.url).queryParams;
+    this.pageIndex = queryParams['pageIndex'] ?? 1;
+    this.pageSize = queryParams['pageSize'] ?? 10;
+    this.sortField = queryParams['sortField'] ?? '';
+    this.sortOrder = queryParams['sortOrder'] ?? '';
     this.loadItemAttributes(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
   }
 
@@ -65,12 +71,13 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
+    const queryParams = this.router.parseUrl(this.router.url).queryParams;
     const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find(item => item.value !== null);
-    const sortField = currentSort?.key ?? null;
-    let sortOrder = currentSort?.value ?? null;
+    const sortField = currentSort?.key ?? (queryParams['sortField'] ?? null);
+    let sortOrder = currentSort?.value ?? (queryParams['sortOrder'] ?? null);
     sortOrder = this.mapSortOrder(
-      sortOrder === 'ascend' || sortOrder === 'descend' ? sortOrder : null
+      sortOrder === 'ascend' || sortOrder === 'descend' || sortOrder === 'asc' || sortOrder === 'desc' ? sortOrder : null
     ); // 'asc', 'desc', or null
 
     this.pageIndex = pageIndex;
@@ -81,14 +88,34 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
     this.loadItemAttributes(pageIndex, pageSize, sortField, sortOrder);
   }
 
-  mapSortOrder(order: 'ascend' | 'descend' | null): 'asc' | 'desc' | null {
+  mapSortOrder(order: 'ascend' | 'descend' | 'asc' | 'desc' | null): 'asc' | 'desc' | null {
+    if (order === 'asc') return 'asc';
     if (order === 'ascend') return 'asc';
+    if (order === 'desc') return 'desc';
     if (order === 'descend') return 'desc';
     return null;
   }
 
+  addItemAttribute(): void {
+    this.router.navigate(['/item-attribute/create'], {
+      queryParams: {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortOrder: this.sortOrder
+      }
+    });
+  }
+
   editItemAttribute(itemAttribute: ItemAttribute): void {
-    this.router.navigate(['/item-attribute/edit', itemAttribute.id]);
+    this.router.navigate(['/item-attribute/edit', itemAttribute.id], {
+      queryParams: {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortOrder: this.sortOrder
+      }
+    });
   }
 
   confirmDelete(itemAttribute: ItemAttribute): void {
