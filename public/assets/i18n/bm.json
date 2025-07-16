@@ -11,9 +11,12 @@
     "EDIT_RECORD": "Sunting Kategori",
     "FAILED_TO_CREATE": "Gagal mencipta rekod",
     "FAILED_TO_UPDATE": "Gagal mengemas kini rekod",
+    "FILE": "Fail",
+    "FILE_PATH": "Laluan Fail",
     "NAME": "Nama",
     "NEW_RECORD_CREATED": "Kategori baharu telah dicipta",
     "RECORD_DELETED": "telah dipadam",
+    "RECORD_NOT_FOUND": "Kategori tidak dijumpai",
     "RECORD_UPDATED": "Kategori telah dikemas kini",
     "UPDATED": "Dikemas kini"
   },

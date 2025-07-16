@@ -36,8 +36,8 @@ export class CategoryService {
     return this.http.post<any>(`${this.baseUrl}/v1/category`, category);
   }
 
-  updateCategory(category: any): Observable<Category> {
-    return this.http.patch<Category>(`${this.baseUrl}/v1/category/${category.id}`, category);
+  updateCategory(id: number, category: any): Observable<Category> {
+    return this.http.patch<Category>(`${this.baseUrl}/v1/category/${id}`, category);
   }
 
   deleteCategory(id: number): Observable<void> {

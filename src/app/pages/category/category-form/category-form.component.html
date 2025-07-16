@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
-  <a nz-button nzType="primary" [routerLink]="['/category/list']">
+  <a nz-button nzType="primary" (click)="goBack()">
     <nz-icon nzType="arrow-left" />
     {{ 'CATEGORY.BACK' | translate }}
   </a>
@@ -23,6 +23,14 @@
           </nz-form-label>
           <nz-form-control [nzSpan]="18">
             <input nz-input formControlName="description" id="description" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">
+            {{ 'CATEGORY.FILE' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input type="file" (change)="onFileChange($event)" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>

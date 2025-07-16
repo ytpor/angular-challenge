@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
-  <a nz-button nzType="primary" [routerLink]="['/category/list']">
+  <a nz-button nzType="primary" (click)="goBack()">
     <nz-icon nzType="arrow-left" />
     {{ 'CATEGORY.BACK' | translate }}
   </a>
@@ -26,6 +26,14 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
+          <nz-form-label [nzSpan]="6">
+            {{ 'CATEGORY.FILE' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <input type="file" (change)="onFileChange($event)" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
           <nz-form-control
             nz-col
             [nzXs]="{ span: 24, offset: 0 }"
@@ -37,6 +45,21 @@
           </nz-form-control>
         </nz-form-item>
       </form>
+      <div *ngIf="categoryData">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">
+            {{ 'CATEGORY.FILE_PATH' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            {{ categoryData.objectName }}
+          </nz-form-control>
+        </nz-form-item>
+        <ng-container *ngIf="categoryData.objectContentType?.includes('image')">
+          <nz-form-control [nzSpan]="18" [nzOffset]="6">
+            <img [src]="categoryData.objectUrl" alt="" />
+          </nz-form-control>
+        </ng-container>
+      </div>
     </nz-col>
   </nz-row>
 </nz-card>
