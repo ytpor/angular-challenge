@@ -73,6 +73,29 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 docker compose build
 ```
 
+## Running the Docker Image
+
+```
+# Using docker compose
+docker compose up -d
+```
+
+```
+# Using docker run
+docker run -p 4200:80 \
+    -e NG_APP_API_BASE_URL='http://localhost:8080/api' \
+    -e NG_APP_IDLE_SECOND=1800 \
+    -e NG_APP_TIMEOUT_SECOND=5 \
+    angular-challenge-app
+```
+
+Get environment value from a file.
+
+```
+# Run command in directory with the .env file
+docker run -p 4200:80 --env-file .env angular-challenge-app
+```
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

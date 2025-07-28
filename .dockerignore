@@ -1,0 +1,14 @@
+node_modules
+dist
+out-tsc
+.angular
+src/environments/*.ts
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.log
+*.md
+.git
+.gitignore
+.dockerignore

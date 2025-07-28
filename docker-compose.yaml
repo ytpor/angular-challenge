@@ -1,8 +1,11 @@
 services:
   app:
+    container_name: angular-challenge
     build:
       context: .
       dockerfile: docker/Dockerfile
+    env_file:
+      - .env
     ports:
       - "4200:80"
     volumes:

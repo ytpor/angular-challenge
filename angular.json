@@ -42,7 +42,10 @@
             ],
             "scripts": [],
             "prerender": false,
-            "ssr": false
+            "ssr": false,
+            "ngxEnv": {
+              "runtime": true
+            }
           },
           "configurations": {
             "production": {
@@ -58,7 +61,10 @@
                   "maximumError": "12MB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "ngxEnv": {
+                "runtime": true
+              }
             },
             "development": {
               "optimization": false,
