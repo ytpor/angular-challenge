@@ -6,6 +6,7 @@ The challenge is to build a UI using Angular.
 
 * Node version 20.17.0 or higher
 * Angular CLI version 19.2.14 or higher
+* [Springboot Challenge](https://github.com/ytpor/angular-challenge)
 
 ## Get started
 
