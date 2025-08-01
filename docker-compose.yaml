@@ -1,9 +1,7 @@
 services:
   app:
     container_name: angular-challenge
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+    build: .
     env_file:
       - .env
     ports:
