@@ -12,8 +12,6 @@ The challenge is to build a UI using Angular.
 
 * Clone this repository
 * Change directory into the newly cloned repository
-* Make a copy of `.env.example`, and name it `.env`.
-* Edit the content of `.env` with your environment in mind.
 
 ## Development server
 
@@ -86,18 +84,7 @@ docker compose up -d
 
 ```
 # Using docker run
-docker run -p 4200:80 \
-    -e NG_APP_API_BASE_URL='http://localhost:8080/api' \
-    -e NG_APP_IDLE_SECOND=1800 \
-    -e NG_APP_TIMEOUT_SECOND=5 \
-    angular-challenge-app
-```
-
-Get environment value from a file.
-
-```
-# Run command in directory with the .env file
-docker run -p 4200:80 --env-file .env angular-challenge-app
+docker run -p 4200:80 angular-challenge-app
 ```
 
 ## Additional Resources

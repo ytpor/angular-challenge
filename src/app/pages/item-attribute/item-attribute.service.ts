@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ItemAttribute } from './item-attribute';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { ItemAttribute } from './item-attribute';
 export class ItemAttributeService {
 
   http = inject(HttpClient);
-  baseUrl = import.meta.env.NG_APP_API_BASE_URL ?? 'http://localhost:8080/api';
+  baseUrl = environment.apiUrl ?? 'http://localhost:8080/api';
 
   public getItemAttributes(
     pageIndex: number,

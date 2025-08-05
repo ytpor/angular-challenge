@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Subject, takeUntil } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IdleService implements OnDestroy {
-  idle_second = Number(import.meta.env.NG_APP_IDLE_SECOND) || 300; // default 5 min
-  timeout_second = Number(import.meta.env.NG_APP_TIMEOUT_SECOND) || 5; // default 5 seconds
+  idle_second = Number(environment.idleSecond) || 300; // default 5 min
+  timeout_second = Number(environment.timeoutSecond) || 5; // default 5 seconds
 
   private readonly destroy$ = new Subject<void>();
 

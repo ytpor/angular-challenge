@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import dayjs from 'dayjs/esm';
 export class AuthService {
 
   http = inject(HttpClient);
-  baseUrl = import.meta.env.NG_APP_API_BASE_URL ?? 'http://localhost:8080/api';
+  baseUrl = environment.apiUrl ?? 'http://localhost:8080/api';
 
   login(data: any) {
     return this.http.post(`${this.baseUrl}/auth/token`, data)
