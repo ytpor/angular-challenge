@@ -12,14 +12,11 @@ RUN apk add --no-cache gettext && \
     rm /etc/nginx/conf.d/default.conf && \
     chown -R nginx:nginx /usr/share/nginx/html && \
     chown -R nginx:nginx /var/cache/nginx
-
 USER nginx
 COPY --chown=nginx:nginx --from=build /app/dist/angular-challenge/browser /usr/share/nginx/html
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-
 COPY --chown=nginx:nginx docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 80
-
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
