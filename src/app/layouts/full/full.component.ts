@@ -4,7 +4,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { ZorroModule } from './../../zorro.module';
 import { HeaderComponent } from '../../components/header/header.component';
 import { SideMenuComponent } from './../../components/side-menu/side-menu.component';
-import { FooterComponent } from '../../components/footer/footer.component';
 import { CollapseService } from '../../services/collapse/collapse.service';
 import { HandsetService } from '../../services/handset/handset.service';
 import { AlertComponent } from '../../components/alert/alert.component';
@@ -19,7 +18,6 @@ import { AlertService } from '../../services/alert/alert.service';
     ZorroModule,
     HeaderComponent,
     SideMenuComponent,
-    FooterComponent,
     AlertComponent,
   ],
   templateUrl: './full.component.html',
