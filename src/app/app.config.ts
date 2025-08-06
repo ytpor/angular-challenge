@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { icons } from './icons-provider';
@@ -14,6 +14,7 @@ import { jwtInterceptor } from './interceptors/jwt/jwt.interceptor';
 import { httpErrorInterceptor } from './interceptors/httpError/http-error.interceptor';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { createTranslateLoader } from './core/i18n/translate-loader';
+import { provideServiceWorker } from '@angular/service-worker';
 
 registerLocaleData(en);
 
@@ -39,6 +40,9 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
       defaultLanguage: 'en', // Set the default language
-    }),
+    }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ]
 };

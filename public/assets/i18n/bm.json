@@ -1,4 +1,8 @@
 {
+  "APP": {
+    "NEW_VERSION": "Versi baru telah tersedia!",
+    "UPDATE": "Kemas kini"
+  },
   "CATEGORY": {
     "ACTIONS": "Tindakan",
     "ADD_RECORD": "Kategori Baru",
