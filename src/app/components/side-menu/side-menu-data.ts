@@ -1,4 +1,5 @@
 import { NavItem } from './nav-item/nav-item';
+import { version } from '../../../../package.json';
 
 export const navItems: NavItem[] = [
   {
@@ -31,5 +32,11 @@ export const navItems: NavItem[] = [
         route: '/item-attribute',
       },
     ]
+  },
+  {
+    level: 2,
+    titleKey: 'v ' + version,
+    route: '#',
+    disabled: true,
   }
 ];
