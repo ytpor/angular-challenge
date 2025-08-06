@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { version } from '../../../../package.json';
 
 @Component({
   selector: 'app-footer',
@@ -8,4 +9,5 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
   currentYear: number = new Date().getFullYear();
+  appVersion = version;
 }
