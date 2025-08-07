@@ -31,12 +31,12 @@ export const navItems: NavItem[] = [
         titleKey: 'SIDE_MENU.ITEM_ATTRIBUTE',
         route: '/item-attribute',
       },
+      {
+        level: 2,
+        titleKey: 'v ' + version,
+        route: '#',
+        disabled: true,
+      }
     ]
   },
-  {
-    level: 2,
-    titleKey: 'v ' + version,
-    route: '#',
-    disabled: true,
-  }
 ];
