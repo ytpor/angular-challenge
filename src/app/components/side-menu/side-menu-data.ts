@@ -1,5 +1,6 @@
 import { NavItem } from './nav-item/nav-item';
 import { version } from '../../../../package.json';
+import { environment } from '../../../environments/environment';
 
 export const navItems: NavItem[] = [
   {
@@ -33,7 +34,7 @@ export const navItems: NavItem[] = [
       },
       {
         level: 2,
-        titleKey: 'v ' + version,
+        titleKey: 'v ' + version + ' ' + (environment.environment ?? 'undefined'),
         route: '#',
         disabled: true,
       }
