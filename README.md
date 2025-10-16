@@ -13,6 +13,12 @@ The challenge is to build a UI using Angular.
 * Clone this repository
 * Change directory into the newly cloned repository
 
+## Install packages
+
+```bash
+npm install
+```
+
 ## Development server
 
 To start a local development server, run:

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { AuthService } from '../../services/auth/auth.service';
+import { KeycloakService } from '../keycloak/keycloak.service';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -17,7 +17,7 @@ export class IdleService implements OnDestroy {
   constructor(
     readonly idle: Idle,
     readonly router: Router,
-    readonly authService: AuthService
+    readonly keycloakService: KeycloakService,
   ) {
     this.setupIdleDetection();
   }
@@ -37,8 +37,7 @@ export class IdleService implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         console.log('Timed out!');
-        this.authService.logout();
-        this.router.navigate(['/login']);
+        this.keycloakService.logout();
       });
   }
 

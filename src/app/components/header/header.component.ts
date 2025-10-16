@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
+import { KeycloakService } from '../../services/keycloak/keycloak.service';
 import { navItems } from './header-data';
 import { TranslateModule } from '@ngx-translate/core';
 import { ZorroModule } from './../../zorro.module';
@@ -21,7 +21,7 @@ import { LanguageSwitcherComponent } from '../language-switcher/language-switche
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  authService = inject(AuthService);
+  keycloakService = inject(KeycloakService);
   router = inject(Router);
   handsetService = inject(HandsetService);
   collapseService = inject(CollapseService);
@@ -33,7 +33,6 @@ export class HeaderComponent {
   }
 
   public logout(){
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.keycloakService.logout();
   }
 }

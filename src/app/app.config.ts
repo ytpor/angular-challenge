@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, isDevMode } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom, isDevMode, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { icons } from './icons-provider';
@@ -15,6 +15,7 @@ import { httpErrorInterceptor } from './interceptors/httpError/http-error.interc
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { createTranslateLoader } from './core/i18n/translate-loader';
 import { provideServiceWorker } from '@angular/service-worker';
+import { KeycloakService } from './services/keycloak/keycloak.service';
 
 registerLocaleData(en);
 
@@ -41,8 +42,13 @@ export const appConfig: ApplicationConfig = {
       },
       defaultLanguage: 'en', // Set the default language
     }), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    KeycloakService,
+    provideAppInitializer(() => {
+      const keycloak = inject(KeycloakService);
+      return keycloak.init();
+    })
   ]
 };

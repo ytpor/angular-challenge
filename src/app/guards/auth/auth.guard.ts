@@ -1,14 +1,22 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
+import { KeycloakService } from '../../services/keycloak/keycloak.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+export const authGuard: CanActivateFn = async (route, state) => {
+  const keycloakService = inject(KeycloakService);
 
-  if (authService.isLoggedIn()) {
+  if (keycloakService.isLoggedIn()) {
+        if (keycloakService.needsRefresh()) {
+      try {
+        await keycloakService.refreshToken();
+      } catch (error) {
+        console.error('Token refresh failed in auth guard:', error);
+        keycloakService.logout();
+        return false;
+      }
+    }
     return true;
   }
-  router.navigate(['/login']);
+  keycloakService.logout();
   return false;
 };
