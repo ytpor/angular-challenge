@@ -50,7 +50,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.pageSize = queryParams['pageSize'] ?? 10;
     this.sortField = queryParams['sortField'] ?? '';
     this.sortOrder = queryParams['sortOrder'] ?? '';
-    this.loadCategories(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
   }
 
   ngOnDestroy(): void {
