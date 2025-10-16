@@ -9,13 +9,12 @@ import Keycloak from 'keycloak-js';
 export class KeycloakService {
   readonly keycloak: Keycloak;
 
-  // Refresh token 5 minutes before expiration (in seconds)
-  private readonly TOKEN_REFRESH_BUFFER = 300;
   private refreshTimeout: any = null;
 
   url = environment.keycloakUrl;
   realm = environment.keycloakRealm;
   clientId = environment.keycloakClientId;
+  tokenRefreshBuffer = environment.tokenRefreshBuffer; // in seconds
 
   constructor() {
     this.keycloak = new Keycloak({
@@ -50,7 +49,7 @@ export class KeycloakService {
     this.clearRefreshTimeout();
 
     this.keycloak.logout({
-      redirectUri: window.location.origin
+      redirectUri: globalThis.location.origin
     });
   }
 
@@ -59,7 +58,7 @@ export class KeycloakService {
    */
   async refreshToken(): Promise<boolean> {
     try {
-      const refreshed = await this.keycloak.updateToken(this.TOKEN_REFRESH_BUFFER);
+      const refreshed = await this.keycloak.updateToken(this.tokenRefreshBuffer);
 
       if (refreshed) {
         // Reschedule the next refresh
@@ -114,10 +113,10 @@ export class KeycloakService {
     const now = dayjs();
     const expiresIn = expiresAt.diff(now, 'second');
 
-    // Refresh token 5 minutes before expiration, but not more frequently than every 30 seconds
-    const refreshIn = Math.max(30, expiresIn - this.TOKEN_REFRESH_BUFFER);
+    // Refresh token before expiration, but ensure we don't schedule for negative time
+    const refreshIn = Math.max(1, expiresIn - this.tokenRefreshBuffer);
 
-    // console.log(`Scheduling token refresh in ${refreshIn} seconds`);
+    // console.log(`Token expires in ${expiresIn}s, scheduling refresh in ${refreshIn}s`);
 
     this.refreshTimeout = setTimeout(() => {
       this.refreshToken();
@@ -140,6 +139,7 @@ export class KeycloakService {
   private setupTokenRefresh(): void {
     // Listen for token expiration
     this.keycloak.onTokenExpired = () => {
+      console.log('Token expired, refreshing...');
       this.refreshToken();
     };
 
@@ -196,6 +196,6 @@ export class KeycloakService {
    */
   needsRefresh(): boolean {
     const expiresIn = this.getTokenExpiresIn();
-    return expiresIn <= this.TOKEN_REFRESH_BUFFER;
+    return expiresIn <= this.tokenRefreshBuffer;
   }
 }
