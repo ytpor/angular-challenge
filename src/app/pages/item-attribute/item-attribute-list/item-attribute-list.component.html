@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;" *ngIf="hasAttributeCreateRole">
   <a nz-button nzType="primary" (click)="addItemAttribute()">
     <nz-icon nzType="plus" />
     {{ 'ITEM_ATTRIBUTE.ADD_RECORD' | translate }}
@@ -34,11 +34,11 @@
         <td>{{ data.description | truncate }}</td>
         <td>{{ data.createdAt | customDate  }}</td>
         <td>{{ data.updatedAt | customDate  }}</td>
-        <td>
-          <button nz-button nzType="link" (click)="editItemAttribute(data)">
+        <td *ngIf="hasAttributeActionRole">
+          <button nz-button nzType="link" (click)="editItemAttribute(data)" *ngIf="hasAttributeEditRole">
             <nz-icon nzType="edit" />
           </button>
-          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)">
+          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)" *ngIf="hasAttributeDeleteRole">
             <nz-icon nzType="delete" />
           </button>
         </td>

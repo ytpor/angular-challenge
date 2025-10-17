@@ -7,4 +7,5 @@ export interface NavItem {
   selected?: boolean;
   disabled?: boolean;
   children?: NavItem[];
+  roles?: string[];
 }

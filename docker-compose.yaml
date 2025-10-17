@@ -1,5 +1,5 @@
 services:
-  app:
+  angular-challenge:
     container_name: angular-challenge
     build: .
     ports:

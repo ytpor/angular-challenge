@@ -26,11 +26,13 @@ export const navItems: NavItem[] = [
         level: 2,
         titleKey: 'SIDE_MENU.CATEGORY',
         route: '/category',
+        roles: ['can-view-category'],
       },
       {
         level: 2,
         titleKey: 'SIDE_MENU.ITEM_ATTRIBUTE',
         route: '/item-attribute',
+        roles: ['can-view-attribute'],
       },
       {
         level: 2,
@@ -38,6 +40,7 @@ export const navItems: NavItem[] = [
         route: '#',
         disabled: true,
       }
-    ]
+    ],
+    roles: ['can-view-category', 'can-view-attribute'],
   },
 ];

@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;" *ngIf="hasCategoryCreateRole">
   <a nz-button nzType="primary" (click)="addCategory()">
     <nz-icon nzType="plus" />
     {{ 'CATEGORY.ADD_RECORD' | translate }}
@@ -23,7 +23,7 @@
         <th nzColumnKey="updatedAt" [nzSortFn]="true" scope="col">
           {{ 'CATEGORY.UPDATED' | translate }}
         </th>
-        <th scope="col">
+        <th scope="col" *ngIf="hasCategoryActionRole">
           {{ 'CATEGORY.ACTIONS' | translate }}
         </th>
       </tr>
@@ -34,11 +34,11 @@
         <td>{{ data.description | truncate }}</td>
         <td>{{ data.createdAt | customDate  }}</td>
         <td>{{ data.updatedAt | customDate  }}</td>
-        <td>
-          <button nz-button nzType="link" (click)="editCategory(data)">
+        <td *ngIf="hasCategoryActionRole">
+          <button nz-button nzType="link" (click)="editCategory(data)" *ngIf="hasCategoryEditRole">
             <nz-icon nzType="edit" />
           </button>
-          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)">
+          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)" *ngIf="hasCategoryDeleteRole">
             <nz-icon nzType="delete" />
           </button>
         </td>

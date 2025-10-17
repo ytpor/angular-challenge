@@ -10,6 +10,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { AlertService } from '../../../services/alert/alert.service';
 import { CategoryService } from '../category.service';
 import { Category } from '../category';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RoleService } from '../../../services/role/role.service';
 
 @Component({
   selector: 'app-category-list',
@@ -33,12 +35,18 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   sortField: any = '';
   sortOrder: any = '';
 
+  hasCategoryActionRole = false;
+  hasCategoryCreateRole = false;
+  hasCategoryDeleteRole = false;
+  hasCategoryEditRole = false;
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     readonly alertService: AlertService,
     readonly categoryService: CategoryService,
     readonly modal: NzModalService,
+    readonly roleService: RoleService,
     readonly route: ActivatedRoute,
     readonly router: Router,
     readonly translate: TranslateService
@@ -50,6 +58,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.pageSize = queryParams['pageSize'] ?? 10;
     this.sortField = queryParams['sortField'] ?? '';
     this.sortOrder = queryParams['sortOrder'] ?? '';
+    this.hasCategoryActionRole = this.roleService.canAccessAll(['can-delete-category', 'can-edit-category']);
+    this.hasCategoryCreateRole = this.roleService.canAccess(['can-create-category']);
+    this.hasCategoryDeleteRole = this.roleService.canAccess(['can-delete-category']);
+    this.hasCategoryEditRole = this.roleService.canAccess(['can-edit-category']);
   }
 
   ngOnDestroy(): void {
@@ -66,10 +78,17 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.categoryService.getCategories(pageIndex, pageSize, sortField, sortOrder)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(data => {
-        this.loading = false;
-        this.categories = data.content;
-        this.total = data.page.totalElements;
+      .subscribe({
+        next: (data) => {
+          this.loading = false;
+          this.categories = data.content;
+          this.total = data.page.totalElements;
+        },
+        error: (error) => {
+          this.loading = false;
+          // Error is already handled by the interceptor, but you can add additional handling here if needed
+          console.error('Error loading categories:', error);
+        }
       });
   }
 
@@ -140,15 +159,18 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   deleteCategory(category: Category): void {
     this.categoryService.deleteCategory(category.id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.loadCategories(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
+      .subscribe({
+        next: () => {
+          const message = this.translate.instant('CATEGORY.RECORD_DELETED');
+          this.alertService.showAlert('success', `'${category.name}' ` + message, []);
+          this.loadCategories(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 403) {
+            const message = this.translate.instant('CATEGORY.DELETE_FORBIDDEN');
+            this.alertService.showAlert('error', message, []);
+          }
+        }
       });
-
-    const message = this.translate.instant('CATEGORY.RECORD_DELETED');
-    this.alertService.showAlert(
-      'success',
-      `'${category.name}' ` + message,
-      []
-    );
   }
 }

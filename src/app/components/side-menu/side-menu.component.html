@@ -1,6 +1,6 @@
 <app-branding></app-branding>
 <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="collapseService.isCollapsed()">
-  <ng-container *ngTemplateOutlet="renderMenu; context: { $implicit: menus }"></ng-container>
+  <ng-container *ngTemplateOutlet="renderMenu; context: { $implicit: filteredMenus }"></ng-container>
   <ng-template #renderMenu let-menus>
     <ng-container *ngFor="let menu of menus">
       <li

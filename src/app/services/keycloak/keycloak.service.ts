@@ -64,7 +64,7 @@ export class KeycloakService {
         // Reschedule the next refresh
         this.scheduleTokenRefresh();
       } else {
-        console.log('Token not refreshed, still valid');
+        // console.log('Token not refreshed, still valid');
       }
 
       return refreshed;
@@ -139,7 +139,7 @@ export class KeycloakService {
   private setupTokenRefresh(): void {
     // Listen for token expiration
     this.keycloak.onTokenExpired = () => {
-      console.log('Token expired, refreshing...');
+      // console.log('Token expired, refreshing...');
       this.refreshToken();
     };
 
@@ -151,6 +151,74 @@ export class KeycloakService {
     // Listen for auth logout to clear refresh
     this.keycloak.onAuthLogout = () => {
       this.clearRefreshTimeout();
+    };
+  }
+
+  /**
+   * Get all realm roles from token
+   */
+  getRealmRoles(): string[] {
+    return this.keycloak.tokenParsed?.realm_access?.roles || [];
+  }
+
+  /**
+   * Get client-specific roles from token
+   */
+  getClientRoles(clientId: string = this.clientId): string[] {
+    return this.keycloak.tokenParsed?.resource_access?.[clientId]?.roles || [];
+  }
+
+  /**
+   * Get all roles (realm + client roles)
+   */
+  getAllRoles(): string[] {
+    const realmRoles = this.getRealmRoles();
+    const clientRoles = this.getClientRoles();
+    return [...realmRoles, ...clientRoles];
+  }
+
+  /**
+   * Check if user has a specific realm role
+   */
+  hasRealmRole(role: string): boolean {
+    return this.getRealmRoles().includes(role);
+  }
+
+  /**
+   * Check if user has a specific client role
+   */
+  hasClientRole(role: string, clientId: string = this.clientId): boolean {
+    return this.getClientRoles(clientId).includes(role);
+  }
+
+  /**
+   * Check if user has any of the specified roles
+   */
+  hasAnyRole(roles: string[]): boolean {
+    const allRoles = this.getAllRoles();
+    return roles.some(role => allRoles.includes(role));
+  }
+
+  /**
+   * Check if user has all of the specified roles
+   */
+  hasAllRoles(roles: string[]): boolean {
+    const allRoles = this.getAllRoles();
+    return roles.every(role => allRoles.includes(role));
+  }
+
+  /**
+   * Get user information from token
+   */
+  getUserInfo(): any {
+    return {
+      username: this.keycloak.tokenParsed?.['preferred_username'],
+      email: this.keycloak.tokenParsed?.['email'],
+      firstName: this.keycloak.tokenParsed?.['given_name'],
+      lastName: this.keycloak.tokenParsed?.['family_name'],
+      roles: this.getAllRoles(),
+      realmRoles: this.getRealmRoles(),
+      clientRoles: this.getClientRoles()
     };
   }
 

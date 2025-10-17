@@ -10,6 +10,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { AlertService } from '../../../services/alert/alert.service';
 import { ItemAttributeService } from '../item-attribute.service';
 import { ItemAttribute } from '../item-attribute';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RoleService } from '../../../services/role/role.service';
 
 @Component({
   selector: 'app-item-attribute-list',
@@ -33,12 +35,18 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
   sortField: any = '';
   sortOrder: any = '';
 
+  hasAttributeActionRole = false;
+  hasAttributeCreateRole = false;
+  hasAttributeDeleteRole = false;
+  hasAttributeEditRole = false;
+
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     readonly alertService: AlertService,
     readonly itemAttributeService: ItemAttributeService,
     readonly modal: NzModalService,
+    readonly roleService: RoleService,
     readonly route: ActivatedRoute,
     readonly router: Router,
     readonly translate: TranslateService
@@ -50,6 +58,10 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
     this.pageSize = queryParams['pageSize'] ?? 10;
     this.sortField = queryParams['sortField'] ?? '';
     this.sortOrder = queryParams['sortOrder'] ?? '';
+    this.hasAttributeActionRole = this.roleService.canAccessAll(['can-delete-attribute', 'can-edit-attribute']);
+    this.hasAttributeCreateRole = this.roleService.canAccess(['can-create-attribute']);
+    this.hasAttributeDeleteRole = this.roleService.canAccess(['can-delete-attribute']);
+    this.hasAttributeEditRole = this.roleService.canAccess(['can-edit-attribute']);
   }
 
   ngOnDestroy(): void {
@@ -140,15 +152,18 @@ export class ItemAttributeListComponent implements OnInit, OnDestroy {
   deleteItemAttribute(itemAttribute: ItemAttribute): void {
     this.itemAttributeService.deleteItemAttribute(itemAttribute.id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.loadItemAttributes(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
+      .subscribe({
+        next: () => {
+          const message = this.translate.instant('ITEM_ATTRIBUTE.RECORD_DELETED');
+          this.alertService.showAlert('success', `'${itemAttribute.name}' ` + message, []);
+          this.loadItemAttributes(this.pageIndex, this.pageSize, this.sortField, this.sortOrder);
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 403) {
+            const message = this.translate.instant('ITEM_ATTRIBUTE.DELETE_FORBIDDEN');
+            this.alertService.showAlert('error', message, []);
+          }
+        }
       });
-
-    const message = this.translate.instant('ITEM_ATTRIBUTE.RECORD_DELETED');
-    this.alertService.showAlert(
-      'success',
-      `'${itemAttribute.name}' ` + message,
-      []
-    );
   }
 }
