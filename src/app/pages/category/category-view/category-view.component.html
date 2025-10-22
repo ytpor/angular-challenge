@@ -1,0 +1,46 @@
+<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+  <a nz-button nzType="primary" (click)="goBack()">
+    <nz-icon nzType="arrow-left" />
+    {{ 'CATEGORY.BACK' | translate }}
+  </a>
+</div>
+
+<nz-card nzTitle="{{ 'CATEGORY.VIEW_RECORD' | translate }}">
+  <nz-row [nzGutter]="16">
+    <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+      <div>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">
+            {{ 'CATEGORY.NAME' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <span *ngIf="categoryData">{{ categoryData.name }}</span>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">
+            {{ 'CATEGORY.DESCRIPTION' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            <span *ngIf="categoryData">{{ categoryData.description }}</span>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div *ngIf="categoryData">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6">
+            {{ 'CATEGORY.FILE_PATH' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSpan]="18">
+            {{ categoryData.objectName }}
+          </nz-form-control>
+        </nz-form-item>
+        <ng-container *ngIf="categoryData.objectContentType?.includes('image')">
+          <nz-form-control [nzSpan]="18" [nzOffset]="6">
+            <img [src]="categoryData.objectUrl" alt="" />
+          </nz-form-control>
+        </ng-container>
+      </div>
+    </nz-col>
+  </nz-row>
+</nz-card>

@@ -140,6 +140,17 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     });
   }
 
+  viewCategory(category: Category): void {
+    this.router.navigate(['/category/view', category.id], {
+      queryParams: {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        sortField: this.sortField,
+        sortOrder: this.sortOrder
+      }
+    });
+  }
+
   confirmDelete(category: Category): void {
     const title = this.translate.instant('CATEGORY.DELETE_CONFIRM_TITLE');
     const content = this.translate.instant('CATEGORY.DELETE_CONFIRM_CONTENT');

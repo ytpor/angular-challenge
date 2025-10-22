@@ -23,7 +23,8 @@
     "RECORD_DELETED": "telah dipadam",
     "RECORD_NOT_FOUND": "Kategori tidak dijumpai",
     "RECORD_UPDATED": "Kategori telah dikemas kini",
-    "UPDATED": "Dikemas kini"
+    "UPDATED": "Dikemas kini",
+    "VIEW_RECORD": "Tinjau Category"
   },
   "COMMON": {
     "NO": "Tidak",

@@ -23,7 +23,7 @@
         <th nzColumnKey="updatedAt" [nzSortFn]="true" scope="col">
           {{ 'CATEGORY.UPDATED' | translate }}
         </th>
-        <th scope="col" *ngIf="hasCategoryActionRole">
+        <th scope="col">
           {{ 'CATEGORY.ACTIONS' | translate }}
         </th>
       </tr>
@@ -34,9 +34,12 @@
         <td>{{ data.description | truncate }}</td>
         <td>{{ data.createdAt | customDate  }}</td>
         <td>{{ data.updatedAt | customDate  }}</td>
-        <td *ngIf="hasCategoryActionRole">
+        <td>
           <button nz-button nzType="link" (click)="editCategory(data)" *ngIf="hasCategoryEditRole">
             <nz-icon nzType="edit" />
+          </button>
+          <button nz-button nzType="link" (click)="viewCategory(data)">
+            <nz-icon nzType="eye" />
           </button>
           <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)" *ngIf="hasCategoryDeleteRole">
             <nz-icon nzType="delete" />

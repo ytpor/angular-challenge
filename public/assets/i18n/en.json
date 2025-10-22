@@ -23,7 +23,8 @@
     "RECORD_DELETED": "has been deleted",
     "RECORD_NOT_FOUND": "Category not found",
     "RECORD_UPDATED": "Category updated",
-    "UPDATED": "Updated"
+    "UPDATED": "Updated",
+    "VIEW_RECORD": "View Category"
   },
   "COMMON": {
     "NO": "No",

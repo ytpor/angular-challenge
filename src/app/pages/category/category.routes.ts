@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { CategoryViewComponent } from './category-view/category-view.component';
 
 export const CategoryRoutes: Routes = [
   {
@@ -23,6 +24,10 @@ export const CategoryRoutes: Routes = [
       {
         path: 'edit/:id',
         component: CategoryDetailComponent,
+      },
+      {
+        path: 'view/:id',
+        component: CategoryViewComponent,
       },
     ],
   },
