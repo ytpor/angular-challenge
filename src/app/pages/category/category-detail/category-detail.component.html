@@ -38,28 +38,30 @@
             nz-col
             [nzXs]="{ span: 24, offset: 0 }"
             [nzLg]="{ span: 28, offset: 6 }"
-          >
+            >
             <button nz-button nzType="primary" [disabled]="!validateForm.valid">
               {{ 'COMMON.SUBMIT' | translate }}
             </button>
           </nz-form-control>
         </nz-form-item>
       </form>
-      <div *ngIf="categoryData">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">
-            {{ 'CATEGORY.FILE_PATH' | translate }}
-          </nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            {{ categoryData.objectName }}
-          </nz-form-control>
-        </nz-form-item>
-        <ng-container *ngIf="categoryData.objectContentType?.includes('image')">
-          <nz-form-control [nzSpan]="18" [nzOffset]="6">
-            <img [src]="categoryData.objectUrl" alt="" />
-          </nz-form-control>
-        </ng-container>
-      </div>
+      @if (categoryData) {
+        <div>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">
+              {{ 'CATEGORY.FILE_PATH' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              {{ categoryData.objectName }}
+            </nz-form-control>
+          </nz-form-item>
+          @if (categoryData.objectContentType?.includes('image')) {
+            <nz-form-control [nzSpan]="18" [nzOffset]="6">
+              <img [src]="categoryData.objectUrl" alt="" />
+            </nz-form-control>
+          }
+        </div>
+      }
     </nz-col>
   </nz-row>
 </nz-card>

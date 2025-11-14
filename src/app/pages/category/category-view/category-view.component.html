@@ -14,7 +14,9 @@
             {{ 'CATEGORY.NAME' | translate }}
           </nz-form-label>
           <nz-form-control [nzSpan]="18">
-            <span *ngIf="categoryData">{{ categoryData.name }}</span>
+            @if (categoryData) {
+              <span>{{ categoryData.name }}</span>
+            }
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -22,25 +24,29 @@
             {{ 'CATEGORY.DESCRIPTION' | translate }}
           </nz-form-label>
           <nz-form-control [nzSpan]="18">
-            <span *ngIf="categoryData">{{ categoryData.description }}</span>
+            @if (categoryData) {
+              <span>{{ categoryData.description }}</span>
+            }
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div *ngIf="categoryData">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="6">
-            {{ 'CATEGORY.FILE_PATH' | translate }}
-          </nz-form-label>
-          <nz-form-control [nzSpan]="18">
-            {{ categoryData.objectName }}
-          </nz-form-control>
-        </nz-form-item>
-        <ng-container *ngIf="categoryData.objectContentType?.includes('image')">
-          <nz-form-control [nzSpan]="18" [nzOffset]="6">
-            <img [src]="categoryData.objectUrl" alt="" />
-          </nz-form-control>
-        </ng-container>
-      </div>
+      @if (categoryData) {
+        <div>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6">
+              {{ 'CATEGORY.FILE_PATH' | translate }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="18">
+              {{ categoryData.objectName }}
+            </nz-form-control>
+          </nz-form-item>
+          @if (categoryData.objectContentType?.includes('image')) {
+            <nz-form-control [nzSpan]="18" [nzOffset]="6">
+              <img [src]="categoryData.objectUrl" alt="" />
+            </nz-form-control>
+          }
+        </div>
+      }
     </nz-col>
   </nz-row>
 </nz-card>

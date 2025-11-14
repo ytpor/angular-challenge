@@ -1,6 +1,6 @@
-<ng-container *ngIf="message">
+@if (message) {
   <nz-alert
     [nzType]="type"
     [nzMessage]="message">
   </nz-alert>
-</ng-container>
+}

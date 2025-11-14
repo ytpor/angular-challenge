@@ -1,9 +1,11 @@
-<div style="display: flex; justify-content: flex-start; margin-bottom: 10px;" *ngIf="hasCategoryCreateRole">
-  <a nz-button nzType="primary" (click)="addCategory()">
-    <nz-icon nzType="plus" />
-    {{ 'CATEGORY.ADD_RECORD' | translate }}
-  </a>
-</div>
+@if (hasCategoryCreateRole) {
+  <div style="display: flex; justify-content: flex-start; margin-bottom: 10px;">
+    <a nz-button nzType="primary" (click)="addCategory()">
+      <nz-icon nzType="plus" />
+      {{ 'CATEGORY.ADD_RECORD' | translate }}
+    </a>
+  </div>
+}
 
 <nz-card>
   <nz-table #basicTable nzShowSizeChanger [nzData]="categories" [nzFrontPagination]="false" [nzLoading]="loading"
@@ -29,23 +31,29 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>{{ data.name }}</td>
-        <td>{{ data.description | truncate }}</td>
-        <td>{{ data.createdAt | customDate  }}</td>
-        <td>{{ data.updatedAt | customDate  }}</td>
-        <td>
-          <button nz-button nzType="link" (click)="editCategory(data)" *ngIf="hasCategoryEditRole">
-            <nz-icon nzType="edit" />
-          </button>
-          <button nz-button nzType="link" (click)="viewCategory(data)">
-            <nz-icon nzType="eye" />
-          </button>
-          <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)" *ngIf="hasCategoryDeleteRole">
-            <nz-icon nzType="delete" />
-          </button>
-        </td>
-      </tr>
+      @for (data of basicTable.data; track data) {
+        <tr>
+          <td>{{ data.name }}</td>
+          <td>{{ data.description | truncate }}</td>
+          <td>{{ data.createdAt | customDate  }}</td>
+          <td>{{ data.updatedAt | customDate  }}</td>
+          <td>
+            @if (hasCategoryEditRole) {
+              <button nz-button nzType="link" (click)="editCategory(data)">
+                <nz-icon nzType="edit" />
+              </button>
+            }
+            <button nz-button nzType="link" (click)="viewCategory(data)">
+              <nz-icon nzType="eye" />
+            </button>
+            @if (hasCategoryDeleteRole) {
+              <button nz-button nzType="link" nzDanger (click)="confirmDelete(data)">
+                <nz-icon nzType="delete" />
+              </button>
+            }
+          </td>
+        </tr>
+      }
     </tbody>
   </nz-table>
 </nz-card>

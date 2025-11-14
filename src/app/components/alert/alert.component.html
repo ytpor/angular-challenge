@@ -1,4 +1,4 @@
-<ng-container *ngIf="message">
+@if (message) {
   <nz-alert
     [nzType]="type"
     [nzMessage]="message"
@@ -7,8 +7,12 @@
     nzShowIcon>
   </nz-alert>
   <ng-template #detailsTemplate>
-    <ul *ngIf="details.length > 0" class="error-details">
-      <li *ngFor="let detail of details">{{ detail }}</li>
-    </ul>
+    @if (details.length > 0) {
+      <ul class="error-details">
+        @for (detail of details; track detail) {
+          <li>{{ detail }}</li>
+        }
+      </ul>
+    }
   </ng-template>
-</ng-container>
+}

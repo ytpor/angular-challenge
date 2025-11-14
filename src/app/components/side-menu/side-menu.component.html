@@ -2,34 +2,36 @@
 <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="collapseService.isCollapsed()">
   <ng-container *ngTemplateOutlet="renderMenu; context: { $implicit: filteredMenus }"></ng-container>
   <ng-template #renderMenu let-menus>
-    <ng-container *ngFor="let menu of menus">
-      <li
-        *ngIf="!menu.children"
-        nz-menu-item nzMatchRouter
-        [nzPaddingLeft]="menu.level * 24"
-        [nzDisabled]="menu.disabled"
-        [nzSelected]="menu.selected"
-      >
-        <ng-container *ngIf="menu.icon">
-          <nz-icon [nzType]="menu.icon"></nz-icon>&nbsp;
-        </ng-container>
-        <a [routerLink]="menu.route" (click)="collapseMenu()">
-          {{ menu.titleKey | translate }}
-        </a>
-      </li>
-      <li
-        *ngIf="menu.children"
-        nz-submenu
-        [nzPaddingLeft]="menu.level * 24"
-        [nzOpen]="menu.open"
-        [nzTitle]="menu.titleKey | translate"
-        [nzIcon]="menu.icon"
-        [nzDisabled]="menu.disabled"
-      >
-        <ul>
-          <ng-container *ngTemplateOutlet="renderMenu; context: { $implicit: menu.children }"></ng-container>
-        </ul>
-      </li>
-    </ng-container>
+    @for (menu of menus; track menu) {
+      @if (!menu.children) {
+        <li
+          nz-menu-item nzMatchRouter
+          [nzPaddingLeft]="menu.level * 24"
+          [nzDisabled]="menu.disabled"
+          [nzSelected]="menu.selected"
+          >
+          @if (menu.icon) {
+            <nz-icon [nzType]="menu.icon"></nz-icon>&nbsp;
+          }
+          <a [routerLink]="menu.route" (click)="collapseMenu()">
+            {{ menu.titleKey | translate }}
+          </a>
+        </li>
+      }
+      @if (menu.children) {
+        <li
+          nz-submenu
+          [nzPaddingLeft]="menu.level * 24"
+          [nzOpen]="menu.open"
+          [nzTitle]="menu.titleKey | translate"
+          [nzIcon]="menu.icon"
+          [nzDisabled]="menu.disabled"
+          >
+          <ul>
+            <ng-container *ngTemplateOutlet="renderMenu; context: { $implicit: menu.children }"></ng-container>
+          </ul>
+        </li>
+      }
+    }
   </ng-template>
 </ul>

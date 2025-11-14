@@ -8,7 +8,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withInterceptors, HttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideNgIdle } from '@ng-idle/core';
 import { jwtInterceptor } from './interceptors/jwt/jwt.interceptor';
 import { httpErrorInterceptor } from './interceptors/httpError/http-error.interceptor';
@@ -16,6 +16,7 @@ import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { createTranslateLoader } from './core/i18n/translate-loader';
 import { provideServiceWorker } from '@angular/service-worker';
 import { KeycloakService } from './services/keycloak/keycloak.service';
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader';
 
 registerLocaleData(en);
 
@@ -38,10 +39,18 @@ export const appConfig: ApplicationConfig = {
       loader: {
         provide: TranslateLoader,
         useFactory: createTranslateLoader,
-        deps: [HttpClient],
+        deps: [],
       },
       defaultLanguage: 'en', // Set the default language
-    }), provideServiceWorker('ngsw-worker.js', {
+    }),
+    {
+      provide: TRANSLATE_HTTP_LOADER_CONFIG,
+      useValue: {
+        prefix: './assets/i18n/',
+        suffix: '.json'
+      }
+    },
+    provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
     }),

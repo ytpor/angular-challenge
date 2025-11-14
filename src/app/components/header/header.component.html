@@ -28,12 +28,14 @@
         </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item nzMatchRouter *ngFor="let menu of menus">
-              <ng-container *ngIf="menu.icon">
-                <nz-icon [nzType]="menu.icon" />&nbsp;
-              </ng-container>
-              <a [routerLink]="menu.route">{{ menu.titleKey | translate }}</a>
-            </li>
+            @for (menu of menus; track menu) {
+              <li nz-menu-item nzMatchRouter>
+                @if (menu.icon) {
+                  <nz-icon [nzType]="menu.icon" />&nbsp;
+                }
+                <a [routerLink]="menu.route">{{ menu.titleKey | translate }}</a>
+              </li>
+            }
             <li nz-menu-divider></li>
             <li nz-menu-item>
               <nz-icon [nzType]="'logout'" />&nbsp;

@@ -1,6 +1,8 @@
-<div *ngIf="updateAvailable" class="update-notification">
-  <span>{{ 'APP.NEW_VERSION' | translate }}</span>
-  <button (click)="activateUpdate()">{{ 'APP.UPDATE' | translate }}</button>
-</div>
+@if (updateAvailable) {
+  <div class="update-notification">
+    <span>{{ 'APP.NEW_VERSION' | translate }}</span>
+    <button (click)="activateUpdate()">{{ 'APP.UPDATE' | translate }}</button>
+  </div>
+}
 
 <router-outlet />

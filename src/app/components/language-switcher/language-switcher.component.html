@@ -10,8 +10,10 @@
 </button>
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li *ngFor="let lang of translate.getLangs()" nz-menu-item (click)="switchLanguage(lang)">
-      {{ getLangLabel(lang) }}
-    </li>
+    @for (lang of translate.getLangs(); track lang) {
+      <li nz-menu-item (click)="switchLanguage(lang)" (keydown.enter)="switchLanguage(lang)">
+        {{ getLangLabel(lang) }}
+      </li>
+    }
   </ul>
 </nz-dropdown-menu>

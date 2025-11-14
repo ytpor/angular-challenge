@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { IdleService } from './services/idle/idle.service';
 import { SwUpdate } from '@angular/service-worker';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -10,9 +10,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [
     RouterOutlet,
-    CommonModule,
     TranslateModule
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
